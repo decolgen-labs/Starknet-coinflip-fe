@@ -2,7 +2,5 @@
 
 html,
 body {
-  font-family: 'Rubik Mono One', monospace;
-  margin: 0;
-  box-sizing: border-box;
+  font-family: 'Rubik Mono One', monospace !important;
 }

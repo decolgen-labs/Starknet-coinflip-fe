@@ -7,16 +7,29 @@ export default function FlipHead({
   result,
   percentageTails,
 }: any) {
-  
-
   return (
     <Box textColor={"white"} bg={"#1d1d1b99"} p={"2rem"} rounded={"8px"}>
       <Flex gap={"32px"} alignItems={"center"}>
-        <Box border="1px" px={14} py={8} borderColor="#FFF" rounded={"8px"}>
-          <Text textAlign={"center"} my={0} fontSize={"2rem"} mb={4}>
+        <Box
+          border="1px"
+          px={6}
+          py={4}
+          w={"9.5rem"}
+          borderColor="#FFF"
+          rounded={"8px"}
+        >
+          <Text
+            textAlign={"center"}
+            my={0}
+            whiteSpace={"pre"}
+            fontSize={"2rem"}
+            mb={2}
+          >
             {percentageHeads.toFixed(0)}%
           </Text>
-          <Text my={0}>{result.heads} HEADS</Text>
+          <Text my={0} whiteSpace={"pre"}>
+            {result.heads} HEADS
+          </Text>
         </Box>
         <Box>
           <svg
@@ -54,11 +67,20 @@ export default function FlipHead({
             />
           </svg>
         </Box>
-        <Box border="1px" px={14} py={8} borderColor="#FFF" rounded={"8px"}>
-          <Text textAlign={"center"} my={0} fontSize={"2rem"} mb={4}>
+        <Box
+          w={"9.5rem"}
+          border="1px"
+          px={6}
+          py={4}
+          borderColor="#FFF"
+          rounded={"8px"}
+        >
+          <Text textAlign={"center"} my={0} fontSize={"2rem"} mb={2}>
             {percentageTails.toFixed(0)}%
           </Text>
-          <Text my={0}>{result.tails} TAILS</Text>
+          <Text my={0} whiteSpace={"pre"}>
+            {result.tails} TAILS
+          </Text>
         </Box>
       </Flex>
     </Box>

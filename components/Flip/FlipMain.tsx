@@ -1,4 +1,4 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 import React from "react";
 
 export default function FlipMain({
@@ -10,19 +10,16 @@ export default function FlipMain({
   status,
 }: any) {
   return (
-    <Box
-      textColor={"white"}
-      px={"32"}
-      mt={4}
-      bg={"#1d1d1b99"}
-      py={8}
-      rounded={"lg"}
-    >
-      <Box position={"relative"} height={"18rem"}>
-        <Box mb={4}>Result: {status}</Box>
-        <Box className={`${styles.coin} ${isFlipping ? styles.flipping : ""}`}>
+    <Box textColor={"white"} mt={4} bg={"#1d1d1b99"} py={8} rounded={"lg"}>
+      <Box position={"relative"} height={"15rem"}>
+        {/* <Box mb={4}>Result: {status}</Box> */}
+        <Box
+          className={`${styles.coin} ${isFlipping ? styles.flipping : ""}`}
+          width={"100%"}
+        >
           <Box
             display={"flex"}
+            width={"100%"}
             justifyContent={"center"}
             className={`${styles.side} ${styles.heads} ${
               isHeads ? styles.visible : ""
@@ -31,6 +28,9 @@ export default function FlipMain({
             <Image src="/assets/coin/head.svg" alt="" />
           </Box>
           <Box
+            display={"flex"}
+            width={"100%"}
+            justifyContent={"center"}
             className={`${styles.side} ${styles.tails} ${
               !isHeads ? styles.visible : ""
             }`}
@@ -40,44 +40,46 @@ export default function FlipMain({
         </Box>
       </Box>
 
-      {isFlipping ? (
-        <Text
-          textTransform={"uppercase"}
-          mt={8}
-          bg={"transparent"}
-          border={"1px"}
-          borderColor={"#FFF"}
-          textColor={"white"}
-          cursor={"pointer"}
-          py={4}
-          px={6}
-          textAlign={"center"}
-          onClick={() => {
-            setIsFlipping(false);
-          }}
-          rounded={"8"}
-        >
-          Reset
-        </Text>
-      ) : (
-        <Text
-          textTransform={"uppercase"}
-          mt={8}
-          border={"1px"}
-          borderColor={"#FFF"}
-          textColor={"black"}
-          fontWeight={"extrabold"}
-          cursor={"pointer"}
-          py={4}
-          px={6}
-          rounded={"8"}
-          onClick={handleFlip}
-          bgColor={"white"}
-          textAlign={"center"}
-        >
-          Click to start
-        </Text>
-      )}
+      <Flex justifyContent={"center"}>
+        {isFlipping ? (
+          <Button
+            textTransform={"uppercase"}
+            bg={"transparent"}
+            variant={"unstyled"}
+            border={"1px"}
+            borderColor={"#FFF"}
+            textColor={"white"}
+            cursor={"pointer"}
+            px={6}
+            textAlign={"center"}
+            onClick={() => {
+              setIsFlipping(false);
+            }}
+            rounded={"8"}
+            w={"20.875rem"}
+          >
+            Reset
+          </Button>
+        ) : (
+          <Button
+            textTransform={"uppercase"}
+            border={"1px"}
+            borderColor={"#FFF"}
+            textColor={"black"}
+            fontWeight={"extrabold"}
+            cursor={"pointer"}
+            py={4}
+            px={6}
+            rounded={"8"}
+            onClick={handleFlip}
+            bgColor={"white"}
+            textAlign={"center"}
+            w={"20.875rem"}
+          >
+            Click to start
+          </Button>
+        )}
+      </Flex>
     </Box>
   );
 }

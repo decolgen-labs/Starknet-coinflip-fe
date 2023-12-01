@@ -40,7 +40,7 @@ export default function Flip() {
   const percentageTails = (result.tails / result.total) * 100 || 0;
 
   return (
-    <>
+    <Box m={12}>
       <Flex flexDirection={"column"}>
         <FlipHead
           percentageHeads={percentageHeads}
@@ -57,6 +57,6 @@ export default function Flip() {
           status={status}
         />
       </Flex>
-    </>
+    </Box>
   );
 }
