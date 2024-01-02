@@ -12,7 +12,6 @@ export default function FlipMain({
   return (
     <Box textColor={"white"} mt={4} bg={"#1d1d1b99"} py={8} rounded={"lg"}>
       <Box position={"relative"} height={"15rem"}>
-        {/* <Box mb={4}>Result: {status}</Box> */}
         <Box
           className={`${styles.coin} ${isFlipping ? styles.flipping : ""}`}
           width={"100%"}
@@ -22,7 +21,7 @@ export default function FlipMain({
             width={"100%"}
             justifyContent={"center"}
             className={`${styles.side} ${styles.heads} ${
-              isHeads ? styles.visible : ""
+              isHeads ? styles.visible : styles.hidden
             }`}
           >
             <Image src="/assets/coin/head.svg" alt="" />
@@ -31,9 +30,7 @@ export default function FlipMain({
             display={"flex"}
             width={"100%"}
             justifyContent={"center"}
-            className={`${styles.side} ${styles.tails} ${
-              !isHeads ? styles.visible : ""
-            }`}
+            className={`${styles.side} ${styles.tails}  ${!isHeads ? "" : ""}`}
           >
             <Image src="/assets/coin/tail.svg" alt="" />
           </Box>

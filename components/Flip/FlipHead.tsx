@@ -75,7 +75,13 @@ export default function FlipHead({
           borderColor="#FFF"
           rounded={"8px"}
         >
-          <Text textAlign={"center"} my={0} fontSize={"2rem"} mb={2}>
+          <Text
+            textAlign={"center"}
+            whiteSpace={"pre"}
+            my={0}
+            fontSize={"2rem"}
+            mb={2}
+          >
             {percentageTails.toFixed(0)}%
           </Text>
           <Text my={0} whiteSpace={"pre"}>
