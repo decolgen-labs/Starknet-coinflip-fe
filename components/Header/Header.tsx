@@ -1,48 +1,20 @@
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { connect, disconnect } from "starknetkit";
-import Profile from "../Profile/Profile";
-import { InjectedConnector } from "starknetkit/injected";
-import abi from "../../abi/starknet.json";
-import { Contract } from "starknet";
 import {
-  argent,
   useAccount,
   useBalance,
   useConnect,
+  useContract,
+  useContractWrite,
   useDisconnect,
-  useProvider,
+  useNetwork,
 } from "@starknet-react/core";
+import { useEffect, useMemo } from "react";
+import abi from "../../abi/starknet.json";
+import abiToken from "../../abi/tokenEth.json";
+import config from "../../config/config";
+import { getEvent } from "../Contract/contract";
 
 export default function Header() {
-  // const [connection, setConnection] = useState<any>("");
-  // const [provider, setProvider] = useState<any>("");
-  // const [address, setAddress] = useState<string>("");
-  // const [isConnected, setIsConnected] = useState<boolean>(false);
-  // const [balance, setBalance] = useState<number>(0);
-
-  // const myTestContract = new Contract(abi, address, provider);
-  // const connectWallet = async () => {
-  //   const connection = await connect();
-
-  //   if (connection && connection.isConnected) {
-  //     setConnection(connection);
-  //     setProvider(connection.account);
-  //     setAddress(connection.selectedAddress);
-  //     setIsConnected(connection.isConnected);
-  //   }
-  // };
-
-  // console.log(myTestContract?.balance_of);
-  // const disConnectWallet = async () => {
-  //   await disconnect();
-  //   setAddress("");
-  //   setIsConnected(false);
-  // };
-
-  // const connectors = [argent()];
-  // const { provider: providerTest } = useProvider();
-
   const { connect, connectors, status: isLogin } = useConnect();
 
   const { account, address, status } = useAccount();
@@ -51,27 +23,51 @@ export default function Header() {
     watch: true,
   });
 
-  const [apiData, setApiData] = useState(null);
-  const [error2, setError] = useState(null);
   const { disconnect } = useDisconnect();
-  // useEffect(() => {
-  //   const apiUrl =
-  //     "https://test-api.quaimark.com/market/api/nftcollections/6595201c54baf3a38f9e0ada/statistic";
 
-  //   fetch(apiUrl)
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       setApiData(data);
-  //     })
-  //     .catch((error) => {
-  //       setError(error2);
-  //     });
-  // }, [apiData, error2]);
+  const { chain } = useNetwork();
+  const { contract } = useContract({
+    abi: abi,
+    address: config.contractAddress,
+  });
+
+  const { contract: contractToken } = useContract({
+    abi: abiToken,
+    address: chain.nativeCurrency.address,
+  });
+
+  const callsApprove = useMemo(() => {
+    if (!address || !contract) return [];
+    return contractToken?.populateTransaction["approve"]!(
+      config.contractAddress,
+      1 * 1e18
+    );
+  }, [address, contract, contractToken?.populateTransaction]);
+
+  const calls = useMemo(() => {
+    if (!address || !contract) return [];
+    return contract.populateTransaction["create_game"]!(
+      config.poolId,
+      2000000000000000,
+      1
+    );
+  }, [contract, address]);
+
+  const {
+    writeAsync,
+    data: dataWrite,
+    isPending,
+  } = useContractWrite({
+    calls,
+  });
+
+  const {
+    writeAsync: writeApprove,
+    data: dataApprove,
+    isPending: isPendingApprove,
+  } = useContractWrite({
+    calls: callsApprove,
+  });
 
   return (
     <>
@@ -125,6 +121,8 @@ export default function Header() {
             )}
           </>
         </Flex>
+
+        <Button onClick={() => writeAsync()}>Create game</Button>
       </Flex>
     </>
   );
