@@ -1,12 +1,14 @@
 {
   "name": "flipcoin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "predeploy": "yarn run lint &&  yarn run build ",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
@@ -32,6 +34,11 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^5.0.0-alpha.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "prettier": "^3.0.0",
     "typescript": "^5"
   }
 }

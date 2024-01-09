@@ -1,4 +1,3 @@
-import React, { useMemo } from "react";
 import {
   Account,
   Contract,
@@ -6,19 +5,19 @@ import {
   shortString,
   stark,
   typedData,
-} from "starknet";
-import abi from "../../abi/starknet.json";
+} from 'starknet';
 
-import config from "../../config/config";
+import abi from '../../abi/starknet.json';
+import config from '../../config/config';
 
 export const getEvent = async (transactionHash: any) => {
   const provider = new RpcProvider({
     nodeUrl:
-      "https://starknet-goerli.infura.io/v3/7d290a76648a4bac93e5f98aa0d463ce",
+      'https://starknet-goerli.infura.io/v3/7d290a76648a4bac93e5f98aa0d463ce',
   });
 
   const FlipcoinAddress =
-    "0x3ec10332dc42dab41094b495e0485441296d167640ea25327e336490c77c2c1";
+    '0x3ec10332dc42dab41094b495e0485441296d167640ea25327e336490c77c2c1';
 
   const contract = new Contract(abi, FlipcoinAddress, provider);
 
@@ -26,6 +25,7 @@ export const getEvent = async (transactionHash: any) => {
 
   const parsedEvent = contract.parseEvents(txReceipt);
 
+  // eslint-disable-next-line no-use-before-define
   const verifyResult = verifyMsg(provider, parsedEvent);
 
   console.log(parsedEvent);
@@ -38,23 +38,23 @@ const verifyMsg = async (provider: any, parsedEvent: any) => {
   const accountAX = new Account(provider, accountAddress, privateKey);
   const types = {
     StarkNetDomain: [
-      { name: "name", type: "felt" },
-      { name: "version", type: "felt" },
-      { name: "chainId", type: "felt" },
+      { name: 'name', type: 'felt' },
+      { name: 'version', type: 'felt' },
+      { name: 'chainId', type: 'felt' },
     ],
     Settle: [
-      { name: "guess", type: "u8" },
-      { name: "seed", type: "u128" },
+      { name: 'guess', type: 'u8' },
+      { name: 'seed', type: 'u128' },
     ],
   };
 
   const typedDataValidate = {
     types,
-    primaryType: "Settle",
+    primaryType: 'Settle',
     domain: {
-      name: "dappName",
-      version: "1",
-      chainId: shortString.encodeShortString("SN_GOERLI"),
+      name: 'dappName',
+      version: '1',
+      chainId: shortString.encodeShortString('SN_GOERLI'),
     },
     message: {
       guess: Number(parsedEvent[0].CreateGame.guess),

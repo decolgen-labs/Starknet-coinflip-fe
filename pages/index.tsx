@@ -1,6 +1,6 @@
-import HomePage from '@/components/Home'
-import Head from 'next/head'
+import Head from 'next/head';
 
+import HomePage from '@/components/Home';
 
 export default function Home() {
   return (
@@ -14,5 +14,5 @@ export default function Home() {
 
       <HomePage />
     </>
-  )
+  );
 }

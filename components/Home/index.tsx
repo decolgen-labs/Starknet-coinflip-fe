@@ -1,6 +1,7 @@
-import { Box, Button, Text } from "@chakra-ui/react";
-import React from "react";
-import Flip from "../Flip/Flip";
+import { Box } from '@chakra-ui/react';
+import React from 'react';
+
+import Flip from '../Flip/Flip';
 
 export default function HomePage() {
   return (
