@@ -26,9 +26,11 @@ export const getEvent = async (transactionHash: any) => {
 
   const parsedEvent = contract.parseEvents(txReceipt);
 
-  const verifyResult = verifyMsg(provider, parsedEvent);
+  const idGame = "0x" + parsedEvent[0].CreateGame.id.toString(16); 
 
-  console.log(parsedEvent);
+  const verifyResult = await verifyMsg(provider, parsedEvent);
+
+  return {verifyResult, idGame };
 };
 
 const verifyMsg = async (provider: any, parsedEvent: any) => {
@@ -63,10 +65,10 @@ const verifyMsg = async (provider: any, parsedEvent: any) => {
   };
 
   const hashMsg = typedData.getMessageHash(typedDataValidate, accountAddress);
-  console.log({ hashMsg });
 
   const signature = await accountAX.signMessage(typedDataValidate);
   const arr = stark.formatSignature(signature);
+  console.log({ arr });
 
   return arr;
 };

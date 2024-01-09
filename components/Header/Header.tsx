@@ -1,27 +1,43 @@
-import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import {
   useAccount,
   useBalance,
   useConnect,
   useContract,
+  useContractRead,
   useContractWrite,
   useDisconnect,
   useNetwork,
 } from "@starknet-react/core";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import abi from "../../abi/starknet.json";
 import abiToken from "../../abi/tokenEth.json";
 import config from "../../config/config";
+import ModalConnectWallet from "../Modal/ModalConnectWallet";
+import Profile from "../Profile/Profile";
+import Loading from "../Loading/Loading";
 import { getEvent } from "../Contract/contract";
 
 export default function Header() {
   const { connect, connectors, status: isLogin } = useConnect();
-
   const { account, address, status } = useAccount();
   const { isLoading, isError, error, data } = useBalance({
     address,
     watch: true,
   });
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenLoading,
+    onOpen: onOpenLoading,
+    onClose: onCloseLoading,
+  } = useDisclosure();
 
   const { disconnect } = useDisconnect();
 
@@ -44,6 +60,9 @@ export default function Header() {
     );
   }, [address, contract, contractToken?.populateTransaction]);
 
+  const [signature, setSignature] = useState<any>();
+  const [gameId, setGameId] = useState<any>();
+
   const calls = useMemo(() => {
     if (!address || !contract) return [];
     return contract.populateTransaction["create_game"]!(
@@ -53,6 +72,23 @@ export default function Header() {
     );
   }, [contract, address]);
 
+  const callsSettle = useMemo(() => {
+    return (gameId: any, signature: any) => {
+      if (!address || !contract) return;
+      return contract.populateTransaction["settle"]!(gameId, signature);
+    };
+  }, [contract, address]);
+
+  const { data: isApprove } = useContractRead({
+    functionName: "allowance",
+    args: [address as string, config.contractAddress],
+    abi: abiToken,
+    address:
+      "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
+    watch: true,
+  });
+
+  console.log(Number(isApprove));
   const {
     writeAsync,
     data: dataWrite,
@@ -69,6 +105,43 @@ export default function Header() {
     calls: callsApprove,
   });
 
+  console.log(dataWrite?.transaction_hash);
+  const handleGame = async () => {
+    try {
+      if (Number(isApprove) > 0) {
+        onOpenLoading();
+        await writeAsync();
+        onCloseLoading();
+      } else {
+        onOpenLoading();
+        await writeApprove();
+
+        onCloseLoading();
+      }
+
+      const { verifyResult, idGame } = await getEvent(
+        "0x14c7334eed2284e198aff5a4a4a40a86978ea668cf6795e28a50b2562504e3a"
+      );
+
+      if (verifyResult !== null && idGame !== null) {
+        const settleCalls = callsSettle(verifyResult, idGame);
+        const {
+          writeAsync: writeSettle,
+          data: dataSettle,
+          isPending: isPendingSettle,
+        } = useContractWrite({ calls: settleCalls });
+
+        if (writeSettle) {
+          const settle = await writeSettle();
+          console.log(settle);
+        }
+      }
+
+      // }
+    } catch (error) {}
+  };
+
+  useEffect(() => {}, [handleGame]);
   return (
     <>
       <Flex
@@ -91,11 +164,22 @@ export default function Header() {
             {address && address.slice(0, 4) + "..." + address.slice(-4)}
           </Text>
 
-          {/* {isConnected ? (
-            <Profile disConnectWallet={disConnectWallet} />
+          {status !== "disconnected" ? (
+            <Profile disConnectWallet={disconnect} />
           ) : (
-            <Button onClick={connectWallet}>Connect</Button>
-          )} */}
+            <>
+              {connectors.map((connector) => (
+                <Button
+                  textColor={"black"}
+                  onClick={() => {
+                    onOpen();
+                  }}
+                >
+                  Connect
+                </Button>
+              ))}
+            </>
+          )}
 
           {data && (
             <Box>
@@ -105,25 +189,36 @@ export default function Header() {
               </Text>
             </Box>
           )}
-          <>
-            {status === "disconnected" ? (
-              <>
-                {connectors.map((connector) => (
-                  <li key={connector.id}>
-                    <Button onClick={() => connect({ connector })}>
-                      Connect
-                    </Button>
-                  </li>
-                ))}
-              </>
-            ) : (
-              <Button onClick={() => disconnect()}>Disconnect</Button>
-            )}
-          </>
         </Flex>
 
-        <Button onClick={() => writeAsync()}>Create game</Button>
+        <Button textColor={"black"} onClick={handleGame}>
+          Create game
+        </Button>
       </Flex>
+
+      <ModalConnectWallet isOpen={isOpen} onClose={onClose}>
+        <>
+          {connectors.map((connector) => (
+            <Flex
+              py={8}
+              border={"1px"}
+              borderColor={"gray.300"}
+              alignItems={"center"}
+              rounded={"lg"}
+              cursor={"pointer"}
+              onClick={() => {
+                connect({ connector });
+                onClose();
+              }}
+            >
+              <Text textColor={"black"} mx={"auto"}>
+                Argent Wallet
+              </Text>
+            </Flex>
+          ))}
+        </>
+      </ModalConnectWallet>
+      <Loading onClose={onCloseLoading} isOpen={isOpenLoading} />
     </>
   );
 }
