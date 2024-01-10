@@ -16,23 +16,32 @@
     "@chakra-ui/system": "^2.5.7",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@reduxjs/toolkit": "^1.9.7",
     "@starknet-react/chains": "^0.1.4",
     "@starknet-react/core": "^2.2.0",
+    "@svgr/webpack": "^8.0.1",
     "framer-motion": "^10.16.5",
     "get-starknet-core": "^3.2.0",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
     "starknet": "^5.24.3",
     "starknetkit": "^1.0.21",
-    "yarn": "^1.22.21",
-    "@svgr/webpack": "^8.0.1"
+    "yarn": "^1.22.21"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-redux": "^7.1.25",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "eslint-config-prettier": "^8.8.0",
@@ -41,5 +50,10 @@
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
     "typescript": "^5"
-  }
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=8"
+  },
+  "packageManager": "yarn@4.0.2"
 }

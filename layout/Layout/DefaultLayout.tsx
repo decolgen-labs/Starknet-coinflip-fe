@@ -1,5 +1,7 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Center } from '@chakra-ui/react';
 import React, { PropsWithChildren } from 'react';
+
+import Footer from '@/components/Footer';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
   return (

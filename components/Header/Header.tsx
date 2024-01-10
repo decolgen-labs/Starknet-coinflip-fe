@@ -50,9 +50,6 @@ export default function Header() {
         justifyContent={'space-between'}
         alignItems={'center'}
       >
-        <Box>
-          <Image src="/assets/logo.svg" alt=""></Image>
-        </Box>
         <Flex
           alignItems={'center'}
           bg={'#1d1d1b99'}

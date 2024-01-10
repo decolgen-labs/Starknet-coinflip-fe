@@ -1,5 +1,5 @@
 import { Button, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'starknetkit';
 
 export default function Index() {
@@ -18,7 +18,7 @@ export default function Index() {
     }
   };
 
-  console.log(provider);
+  useEffect(() => {}, [address]);
 
   return (
     <div>
