@@ -13,12 +13,16 @@ import { FaUserCircle } from 'react-icons/fa';
 export default function Profile({ disConnectWallet }: any) {
   return (
     <Menu>
-      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+      <MenuButton
+        textColor={'black'}
+        as={Button}
+        rightIcon={<ChevronDownIcon />}
+      >
         <FaUserCircle />
       </MenuButton>
       <MenuList minWidth={'fit-content'} p={0}>
         <MenuItem>
-          <Text onClick={disConnectWallet} fontSize={'sm'}>
+          <Text onClick={() => disConnectWallet()} fontSize={'sm'}>
             Log out
           </Text>
         </MenuItem>
