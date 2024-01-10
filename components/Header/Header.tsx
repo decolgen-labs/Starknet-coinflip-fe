@@ -69,7 +69,7 @@ export default function Header() {
     return contract.populateTransaction['create_game']!(
       config.poolId,
       2000000000000000,
-      1
+      0
     );
   }, [contract, address]);
 
@@ -89,7 +89,6 @@ export default function Header() {
     watch: true,
   });
 
-  console.log(Number(isApprove));
   const {
     writeAsync,
     data: dataWrite,
@@ -106,45 +105,38 @@ export default function Header() {
     calls: callsApprove,
   });
 
+  console.log(Number(isApprove));
+
   /* console.log(dataWrite?.transaction_hash); */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {}, [dataWrite]);
+
   const handleGame = async () => {
     try {
-      if (Number(isApprove) > 0) {
-        onOpenLoading();
-        await writeAsync();
+      onOpenLoading();
+      // Replace 'if (true)' with the appropriate condition
+      if (true) {
+        const createGame = await writeAsync();
+
         onCloseLoading();
+        if (createGame && createGame.transaction_hash) {
+          const transactionHash = createGame.transaction_hash;
+
+          console.log(transactionHash);
+          const { isWon, idGame } = await getEvent(transactionHash);
+          console.log(isWon);
+          alert(isWon ? 'You Win' : 'You ngu');
+        }
       } else {
         onOpenLoading();
         await writeApprove();
-
         onCloseLoading();
       }
-
-      const { verifyResult, idGame } = await getEvent(
-        '0x14c7334eed2284e198aff5a4a4a40a86978ea668cf6795e28a50b2562504e3a'
-      );
-
-      if (verifyResult !== null && idGame !== null) {
-        const settleCalls = callsSettle(verifyResult, idGame);
-        const {
-          writeAsync: writeSettle,
-          data: dataSettle,
-          isPending: isPendingSettle,
-          // eslint-disable-next-line react-hooks/rules-of-hooks
-        } = useContractWrite({ calls: settleCalls });
-
-        if (writeSettle) {
-          const settle = await writeSettle();
-          console.log(settle);
-        }
-      }
-
-      // }
-    } catch (error) {}
+    } catch (error) {
+      console.error('Error in handleGame:', error);
+      onCloseLoading();
+    }
   };
 
-  useEffect(() => {}, [handleGame]);
   return (
     <>
       <Flex
