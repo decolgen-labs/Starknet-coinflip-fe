@@ -1,11 +1,12 @@
-import { Button, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { connect } from "starknetkit";
+import { Button, Text } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { connect } from 'starknetkit';
 
 export default function Index() {
-  const [connection, setConnection] = useState<any>("");
-  const [provider, setProvider] = useState<any>("");
-  const [address, setAddress] = useState<any>("");
+  // eslint-disable-next-line no-unused-vars
+  const [connection, setConnection] = useState<any>('');
+  const [provider, setProvider] = useState<any>('');
+  const [address, setAddress] = useState<any>('');
 
   const connectWallet = async () => {
     const connection = await connect();
@@ -21,7 +22,7 @@ export default function Index() {
 
   return (
     <div>
-      <Text textColor={"white"}> {address}</Text>
+      <Text textColor={'white'}> {address}</Text>
       <Button onClick={connectWallet}>Connect</Button>
     </div>
   );

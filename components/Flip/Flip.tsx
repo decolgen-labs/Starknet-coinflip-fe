@@ -1,13 +1,15 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
-import { useState } from "react";
-import styles from "../../styles/CoinFlip.module.css";
-import FlipHead from "./FlipHead";
-import FlipMain from "./FlipMain";
+import { Box, Flex } from '@chakra-ui/react';
+import { useState } from 'react';
+
+import styles from '../../styles/CoinFlip.module.css';
+
+import FlipHead from './FlipHead';
+import FlipMain from './FlipMain';
 
 export default function Flip() {
   const [result, setResult] = useState({ total: 0, heads: 0, tails: 0 });
 
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState('');
 
   const [isHeads, setIsHeads] = useState(true);
   const [isFlipping, setIsFlipping] = useState(false);
@@ -23,14 +25,14 @@ export default function Flip() {
       if (flipResult <= 0.5) {
         setIsHeads(true);
         newResult.heads++;
-        setStatus("HEAD");
-        console.log("It is head");
+        setStatus('HEAD');
+        console.log('It is head');
       } else {
         setIsHeads(false);
         newResult.tails++;
-        setStatus("TAIL");
+        setStatus('TAIL');
 
-        console.log("It is tails");
+        console.log('It is tails');
       }
       setResult(newResult);
     }, 3000);
@@ -41,7 +43,7 @@ export default function Flip() {
 
   return (
     <Box m={12}>
-      <Flex flexDirection={"column"}>
+      <Flex flexDirection={'column'}>
         <FlipHead
           percentageHeads={percentageHeads}
           result={result}

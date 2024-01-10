@@ -1,27 +1,28 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
-  Box,
   Button,
-  Image,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Text,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { FaUserCircle } from "react-icons/fa";
-import React from "react";
+} from '@chakra-ui/react';
+import React from 'react';
+import { FaUserCircle } from 'react-icons/fa';
 
 export default function Profile({ disConnectWallet }: any) {
   return (
     <Menu>
-      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+      <MenuButton
+        textColor={'black'}
+        as={Button}
+        rightIcon={<ChevronDownIcon />}
+      >
         <FaUserCircle />
       </MenuButton>
-      <MenuList minWidth={"fit-content"} p={0}>
+      <MenuList minWidth={'fit-content'} p={0}>
         <MenuItem>
-          <Text onClick={disConnectWallet} fontSize={"sm"}>
+          <Text onClick={() => disConnectWallet()} fontSize={'sm'}>
             Log out
           </Text>
         </MenuItem>
