@@ -8,9 +8,10 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
         w="full"
         h="100vh"
         backgroundImage="url('/assets/art/frame.svg')"
-        backgroundRepeat="no-repeat"
-        backgroundPosition="center"
+        backgroundPosition="center center"
+        bgRepeat="no-repeat"
         backgroundSize="cover"
+        overflow="hidden"
       >
         {children}
       </Box>

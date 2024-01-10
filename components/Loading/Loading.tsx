@@ -1,12 +1,11 @@
 import {
-  Center,
   Flex,
   Modal,
   ModalBody,
   ModalContent,
   ModalOverlay,
   Spinner,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 export default function Loading({ isOpen, onClose }: any) {
   return (
@@ -14,8 +13,8 @@ export default function Loading({ isOpen, onClose }: any) {
       <ModalOverlay />
       <ModalContent>
         <ModalBody>
-          <Flex alignItems={"center"} py={8}>
-            <Spinner color="black" mx={"auto"} />
+          <Flex alignItems={'center'} py={8}>
+            <Spinner color="black" mx={'auto'} />
           </Flex>
         </ModalBody>
       </ModalContent>

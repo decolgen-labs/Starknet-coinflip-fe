@@ -13,8 +13,9 @@ import type { AppProps } from 'next/app';
 import { Nunito_Sans } from 'next/font/google';
 
 import DefaultLayout from '@/layout/Layout/DefaultLayout';
-import Layout from '@/layout/Layout/Layout';
+
 const nutinoSans = Nunito_Sans({ subsets: ['latin'] });
+
 export default function App({ Component, pageProps }: AppProps) {
   const { connectors } = useInjectedConnectors({
     // Show these connectors if the user has no connector installed.

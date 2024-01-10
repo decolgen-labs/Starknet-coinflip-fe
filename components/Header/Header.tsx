@@ -106,7 +106,8 @@ export default function Header() {
     calls: callsApprove,
   });
 
-  console.log(dataWrite?.transaction_hash);
+  /* console.log(dataWrite?.transaction_hash); */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleGame = async () => {
     try {
       if (Number(isApprove) > 0) {
@@ -130,6 +131,7 @@ export default function Header() {
           writeAsync: writeSettle,
           data: dataSettle,
           isPending: isPendingSettle,
+          // eslint-disable-next-line react-hooks/rules-of-hooks
         } = useContractWrite({ calls: settleCalls });
 
         if (writeSettle) {
@@ -169,8 +171,9 @@ export default function Header() {
             <Profile disConnectWallet={disconnect} />
           ) : (
             <>
-              {connectors.map(connector => (
+              {connectors.map((connector, index) => (
                 <Button
+                  key={`connect1-${index}`}
                   textColor={'black'}
                   onClick={() => {
                     onOpen();
@@ -199,9 +202,10 @@ export default function Header() {
 
       <ModalConnectWallet isOpen={isOpen} onClose={onClose}>
         <>
-          {connectors.map(connector => (
+          {connectors.map((connector, index) => (
             <Flex
               py={8}
+              key={`connect2-${index}`}
               border={'1px'}
               borderColor={'gray.300'}
               alignItems={'center'}
