@@ -10,7 +10,9 @@ import {
 import abi from '../../abi/starknet.json';
 import config from '../../config/config';
 
-export const getEvent = async (transactionHash: any) => {
+export const getEvent = async (transactionHash: string) => {
+
+  console.log(transactionHash)
   const provider = new RpcProvider({
     nodeUrl:
       'https://starknet-goerli.infura.io/v3/7d290a76648a4bac93e5f98aa0d463ce',
@@ -22,6 +24,8 @@ export const getEvent = async (transactionHash: any) => {
   const contract = new Contract(abi, FlipcoinAddress, provider);
 
   const txReceipt = await provider.getTransactionReceipt(transactionHash);
+
+  console.log(txReceipt)
 
   const parsedEvent = contract.parseEvents(txReceipt);
 

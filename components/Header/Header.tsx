@@ -29,7 +29,7 @@ import Profile from '../Profile/Profile';
 export default function Header() {
   const { connect, connectors, status: isLogin } = useConnect();
   const { account, address, status } = useAccount();
-  const { isLoading, isError, error, data } = useBalance({
+  const { isLoading, isError, error, data, refetch } = useBalance({
     address,
     watch: true,
   });
@@ -41,101 +41,6 @@ export default function Header() {
   } = useDisclosure();
 
   const { disconnect } = useDisconnect();
-
-  const { chain } = useNetwork();
-  const { contract } = useContract({
-    abi: abi,
-    address: config.contractAddress,
-  });
-
-  const { contract: contractToken } = useContract({
-    abi: abiToken,
-    address: chain.nativeCurrency.address,
-  });
-
-  const callsApprove = useMemo(() => {
-    if (!address || !contract) return [];
-    return contractToken?.populateTransaction['approve']!(
-      config.contractAddress,
-      1 * 1e18
-    );
-  }, [address, contract, contractToken?.populateTransaction]);
-
-  const [signature, setSignature] = useState<any>();
-  const [gameId, setGameId] = useState<any>();
-
-  const calls = useMemo(() => {
-    if (!address || !contract) return [];
-    return contract.populateTransaction['create_game']!(
-      config.poolId,
-      2000000000000000,
-      0
-    );
-  }, [contract, address]);
-
-  const callsSettle = useMemo(() => {
-    return (gameId: any, signature: any) => {
-      if (!address || !contract) return;
-      return contract.populateTransaction['settle']!(gameId, signature);
-    };
-  }, [contract, address]);
-
-  const { data: isApprove } = useContractRead({
-    functionName: 'allowance',
-    args: [address as string, config.contractAddress],
-    abi: abiToken,
-    address:
-      '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
-    watch: true,
-  });
-
-  const {
-    writeAsync,
-    data: dataWrite,
-    isPending,
-  } = useContractWrite({
-    calls,
-  });
-
-  const {
-    writeAsync: writeApprove,
-    data: dataApprove,
-    isPending: isPendingApprove,
-  } = useContractWrite({
-    calls: callsApprove,
-  });
-
-  console.log(Number(isApprove));
-
-  /* console.log(dataWrite?.transaction_hash); */
-  useEffect(() => {}, [dataWrite]);
-
-  const handleGame = async () => {
-    try {
-      onOpenLoading();
-      // Replace 'if (true)' with the appropriate condition
-      if (true) {
-        const createGame = await writeAsync();
-
-        onCloseLoading();
-        if (createGame && createGame.transaction_hash) {
-          const transactionHash = createGame.transaction_hash;
-
-          console.log(transactionHash);
-          const { isWon, idGame } = await getEvent(transactionHash);
-          console.log(isWon);
-          alert(isWon ? 'You Win' : 'You ngu');
-        }
-      } else {
-        onOpenLoading();
-        await writeApprove();
-        onCloseLoading();
-      }
-    } catch (error) {
-      console.error('Error in handleGame:', error);
-      onCloseLoading();
-    }
-  };
 
   return (
     <>
@@ -186,10 +91,6 @@ export default function Header() {
             </Box>
           )}
         </Flex>
-
-        <Button textColor={'black'} onClick={handleGame}>
-          Create game
-        </Button>
       </Flex>
 
       <ModalConnectWallet isOpen={isOpen} onClose={onClose}>
