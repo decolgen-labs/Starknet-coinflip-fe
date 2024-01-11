@@ -18,7 +18,6 @@ import { useAuth } from '../hooks/useAuth';
 import { removeUserFromStorage } from '@/redux/user/user-helper';
 import { setUser, setUserLoading } from '@/redux/user/user-slice';
 
-interface IProps {}
 export default function Profile() {
   const { user } = useAuth();
   const { isLoading, data } = useBalance({

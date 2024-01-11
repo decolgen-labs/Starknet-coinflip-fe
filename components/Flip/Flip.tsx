@@ -34,13 +34,10 @@ export default function Flip({
         setIsHeads(true);
         newResult.heads++;
         setStatus('HEAD');
-        console.log('It is head');
       } else {
         setIsHeads(false);
         newResult.tails++;
         setStatus('TAIL');
-
-        console.log('It is tails');
       }
       setResult(newResult);
     }, 3000);

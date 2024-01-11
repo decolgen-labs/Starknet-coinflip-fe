@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Icon, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
+
 import IconETH from '../../public/assets/icons/eth.svg';
 
 export default function FlipMain({
