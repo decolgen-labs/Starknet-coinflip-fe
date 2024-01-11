@@ -8,18 +8,23 @@ import {
   useNetwork,
 } from '@starknet-react/core';
 import { useEffect, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import abi from '../../abi/starknet.json';
 import abiToken from '../../abi/tokenEth.json';
 import config from '../../config/config';
 import { getEvent } from '../Contract/contract';
 import Flip from '../Flip/Flip';
+import { useAuth } from '../hooks/useAuth';
 import Loading from '../Loading/Loading';
+
+import { setUserLoading } from '@/redux/user/user-slice';
 export default function Starked() {
   const [staked, setStaked] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0.002);
   const [statusWon, setStatusWon] = useState<any>();
   const { account, address, status } = useAccount();
+  const dispatch = useDispatch();
   const { isLoading, isError, error, data, refetch } = useBalance({
     address,
     watch: true,
@@ -93,6 +98,7 @@ export default function Starked() {
       const maxAttempts = 10;
       let isFinish = false;
       let attempts = 0;
+      dispatch(setUserLoading(true));
       while (!isFinish && attempts < maxAttempts) {
         try {
           await new Promise(resolve => setTimeout(resolve, 2000));
@@ -121,6 +127,7 @@ export default function Starked() {
       } else {
         console.error('No valid data found on the blockchain');
       }
+      dispatch(setUserLoading(false));
     }
   };
   const handleGame = async () => {

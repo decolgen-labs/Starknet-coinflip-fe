@@ -18,15 +18,17 @@ export default function Home() {
 
   useEffect(() => {
     if (address && address != user) {
+      console.log('Dectect adress');
       dispatch(setUser(address));
       saveUserToStorage(address);
     }
   }, [address]);
   useEffect(() => {
     if (user && status === 'disconnected') {
+      console.log('Dectect dis');
       connect({ connector: connectors[0] });
     }
-  }, [isLoading]);
+  }, []);
   return (
     <>
       <Head>

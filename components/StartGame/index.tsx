@@ -1,8 +1,5 @@
 'use client';
 import { Box, Center, Icon } from '@chakra-ui/react';
-import { useAccount, useConnect } from '@starknet-react/core';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 import ConnectWallet from '../Button/ConnectWallet';
 import Profile from '../Profile/Profile';
@@ -11,27 +8,10 @@ import Starked from '../Starked/Starked';
 import { useAuth } from '@/components/hooks/useAuth';
 import BgStart from '@/public/assets/art/bg.svg';
 import LogoIcon from '@/public/assets/logo.svg';
-import { saveUserToStorage } from '@/redux/user/user-helper';
-import { setUser } from '@/redux/user/user-slice';
 
 const StartGame = () => {
-  const { user, isLoading } = useAuth();
-  const { account, address, status } = useAccount();
-  const { connect, connectors, status: isLogin } = useConnect();
+  const { user } = useAuth();
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (address && address != user) {
-      dispatch(setUser(address));
-      saveUserToStorage(address);
-    }
-  }, [address]);
-  useEffect(() => {
-    if (user && status === 'disconnected') {
-      connect({ connector: connectors[0] });
-    }
-  }, [isLoading]);
   return (
     <>
       <Box position="relative" height="full">

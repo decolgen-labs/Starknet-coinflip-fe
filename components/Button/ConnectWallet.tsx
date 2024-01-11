@@ -1,14 +1,11 @@
+import { Icon } from '@chakra-ui/icons';
 import { Button, Flex, useDisclosure, Text } from '@chakra-ui/react';
 import { useAccount, useConnect } from '@starknet-react/core';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import ModalConnectWallet from '../Modal/ModalConnectWallet';
-
-import { saveUserToStorage } from '@/redux/user/user-helper';
-import { setUser } from '@/redux/user/user-slice';
-import { Icon } from '@chakra-ui/icons';
 import IconWallet from '../../public/assets/icons/agent.svg';
+import ModalConnectWallet from '../Modal/ModalConnectWallet';
 
 const ConnectWallet = () => {
   const { connect, connectors, status: isLogin } = useConnect();
@@ -49,7 +46,7 @@ const ConnectWallet = () => {
             >
               <Icon as={IconWallet} fontSize={'2xl'} />
               <Text fontSize={'2xl'} textColor="white">
-                Argent{' '}
+                Argent
               </Text>
             </Flex>
           ))}

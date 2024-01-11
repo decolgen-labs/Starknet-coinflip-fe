@@ -70,7 +70,7 @@ export default function Profile() {
           onClick={async () => {
             await dispatch(setUserLoading(true));
             removeUserFromStorage();
-            dispatch(setUser(undefined));
+            await dispatch(setUser(undefined));
             await disconnect();
             dispatch(setUserLoading(false));
           }}

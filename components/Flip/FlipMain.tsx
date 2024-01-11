@@ -2,6 +2,7 @@ import { Box, Button, Flex, Icon, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
 import IconETH from '../../public/assets/icons/eth.svg';
+import { useAuth } from '../hooks/useAuth';
 
 export default function FlipMain({
   isHeads,
@@ -36,7 +37,7 @@ export default function FlipMain({
   const [headsCount, setHeadsCount] = useState(0);
   const [tailsCount, setTailsCount] = useState(0);
   const [status, setStatus] = useState('');
-
+  const { isLoading } = useAuth();
   const coinRef = useRef(null);
 
   const flipCoin = (result: 'heads' | 'tails') => {
@@ -132,6 +133,7 @@ export default function FlipMain({
             bg={'#012E3F'}
             _hover={{ borderColor: '#00FFB3', textColor: '#00FFB3' }}
             variant={'hover'}
+            isLoading={isLoading}
             color={'#018576'}
             rounded={'2xl'}
             onClick={handleGame}
@@ -140,34 +142,30 @@ export default function FlipMain({
           </Button>
         </Flex>
 
-        {statusWon && (
-          <>
-            {statusWon ? (
-              <Text
-                border={'1px'}
-                borderColor={'green.400'}
-                textColor={'green.400'}
-                px={12}
-                rounded={'xl'}
-                mt={4}
-                py={2}
-              >
-                You win
-              </Text>
-            ) : (
-              <Text
-                border={'1px'}
-                px={12}
-                rounded={'xl'}
-                mt={4}
-                py={2}
-                textColor={'red.500'}
-                borderColor={'red.500'}
-              >
-                You Lose
-              </Text>
-            )}
-          </>
+        {statusWon ? (
+          <Text
+            border={'1px'}
+            borderColor={'green.400'}
+            textColor={'green.400'}
+            px={12}
+            rounded={'xl'}
+            mt={4}
+            py={2}
+          >
+            You win
+          </Text>
+        ) : (
+          <Text
+            border={'1px'}
+            px={12}
+            rounded={'xl'}
+            mt={4}
+            py={2}
+            textColor={'secondary.200'}
+            borderColor={'secondary.200'}
+          >
+            You Lose
+          </Text>
         )}
       </Box>
     </Box>
