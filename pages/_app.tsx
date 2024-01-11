@@ -17,16 +17,14 @@ import { PersistGate } from 'redux-persist/integration/react';
 import DefaultLayout from '@/layout/Layout/DefaultLayout';
 import { persistor, store } from '@/redux/store';
 import theme from '@/styles/theme';
+import '../styles/globals.css';
 
 const nutinoSans = Nunito_Sans({ subsets: ['latin'] });
 
 export default function App({ Component, pageProps }: AppProps) {
   const { connectors } = useInjectedConnectors({
-    // Show these connectors if the user has no connector installed.
     recommended: [argent(), braavos()],
-    // Hide recommended connectors if the user has any connector installed.
     includeRecommended: 'onlyIfNoConnectors',
-    // Randomize the order of the connectors.
     order: 'random',
   });
 

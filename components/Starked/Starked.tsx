@@ -1,16 +1,11 @@
-import {
-  Box,
-  Button,
-  Flex,
-  useDisclosure
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Icon, Text, useDisclosure } from '@chakra-ui/react';
 import {
   useAccount,
   useBalance,
   useContract,
   useContractRead,
   useContractWrite,
-  useNetwork
+  useNetwork,
 } from '@starknet-react/core';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -19,29 +14,11 @@ import abiToken from '../../abi/tokenEth.json';
 import config from '../../config/config';
 import { getEvent } from '../Contract/contract';
 import Flip from '../Flip/Flip';
-
+import Loading from '../Loading/Loading';
 export default function Starked() {
   const [staked, setStaked] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0.002);
-
-  const listItem = [
-    {
-      value: 0.002,
-    },
-    {
-      value: 0.005,
-    },
-    {
-      value: 0.01,
-    },
-    {
-      value: 0.02,
-    },
-    {
-      value: 0.5,
-    },
-  ];
-
+  const [statusWon, setStatusWon] = useState<any>();
   const { account, address, status } = useAccount();
   const { isLoading, isError, error, data, refetch } = useBalance({
     address,
@@ -79,7 +56,7 @@ export default function Starked() {
     return contract.populateTransaction['create_game']!(
       config.poolId,
       amount * 1e18,
-     coin
+      coin
     );
   }, [address, contract, amount, coin]);
 
@@ -108,7 +85,7 @@ export default function Starked() {
     calls: callsApprove,
   });
 
-  useEffect(() => { }, [dataWrite]);
+  useEffect(() => {}, [dataWrite]);
 
   const handleSettle = async (transactionHash: string) => {
     if (transactionHash) {
@@ -116,7 +93,6 @@ export default function Starked() {
       const maxAttempts = 10;
       let isFinish = false;
       let attempts = 0;
-      console.log("passs")
       while (!isFinish && attempts < maxAttempts) {
         try {
           await new Promise(resolve => setTimeout(resolve, 2000));
@@ -128,7 +104,6 @@ export default function Starked() {
           }
 
           isFinish = true;
-
         } catch (error) {
           attempts++;
           console.error('Error in handleSettle:', error);
@@ -136,13 +111,13 @@ export default function Starked() {
       }
 
       if (!isFinish) {
-        alert("Settle failed");
+        alert('Settle failed');
         return;
       }
 
       if (isWon !== undefined) {
         refetch();
-        alert(isWon ? 'You Win' : 'You Lose');
+        setStatusWon(isWon);
       } else {
         console.error('No valid data found on the blockchain');
       }
@@ -153,10 +128,8 @@ export default function Starked() {
       onOpenLoading();
       if (Number(isApprove) >= amount * 1e18) {
         const createGame = await writeAsync();
-        onCloseLoading();
-
-        console.log("1")
         await handleSettle(createGame?.transaction_hash);
+        onCloseLoading();
       } else {
         onOpenLoading();
         await writeApprove();
@@ -168,40 +141,19 @@ export default function Starked() {
     }
   };
 
-
   return (
     <>
       <Flip
-      coin={coin}
-      setCoin={setCoin}
-       />
+        coin={coin}
+        setCoin={setCoin}
+        handleGame={handleGame}
+        setStaked={setStaked}
+        setAmount={setAmount}
+        staked={staked}
+        statusWon={statusWon}
+      />
 
-      <Flex>
-        {listItem.map((item: any, index: number) => (
-          <Box
-            onClick={() => {
-              setStaked(index), setAmount(item.value);
-            }}
-            cursor={'pointer'}
-            bg={index === staked ? 'yellow.400' : 'transparent'}
-            _hover={{ bg: 'yellow.400', textColor: 'black' }}
-            py={4}
-            px={6}
-            textColor={"white"}
-            border={'1px'}
-            borderColor={'gray.100'}
-            key={index}
-          >
-            {item.value} ETH
-          </Box>
-        ))}
-      </Flex>
-
-      <Flex gap={4}>
-        <Button py={2} mt={4} textColor={'black'} onClick={handleGame}>
-          1.Create game
-        </Button>
-      </Flex>
+      <Loading isOpen={isOpenLoading} onClose={onCloseLoading} />
     </>
   );
 }

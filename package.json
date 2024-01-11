@@ -20,7 +20,7 @@
     "@starknet-react/chains": "^0.1.4",
     "@starknet-react/core": "^2.2.0",
     "@svgr/webpack": "^8.0.1",
-    "framer-motion": "^10.16.5",
+    "framer-motion": "^10.18.0",
     "get-starknet-core": "^3.2.0",
     "next": "14.0.3",
     "react": "^18",

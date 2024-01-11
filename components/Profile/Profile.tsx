@@ -32,17 +32,28 @@ export default function Profile() {
       <MenuButton
         textColor={'black'}
         as={Button}
+        bg={'#018576'}
+        rounded={'2xl'}
+        color={'white'}
+        variant={'hover'}
         rightIcon={<ChevronDownIcon />}
       >
         <HStack>
           <FaUserCircle />
-          <Text>{user && user.slice(0, 4) + '...' + user.slice(-4)}</Text>
+          <Text color={'white'} fontWeight="bold">
+            {isLoading ? (
+              <Text>Loading...</Text>
+            ) : (
+              <>
+                {(parseFloat(data?.value as any) / 1e18).toFixed(6) + ' '}
+                {data?.symbol}
+              </>
+            )}
+          </Text>
+          {/* <Text>{user && user.slice(0, 4) + '...' + user.slice(-4)}</Text> */}
         </HStack>
       </MenuButton>
-      <HStack mt={2}>
-        <Text color="white" fontSize="sm">
-          Balance:
-        </Text>
+      {/* <HStack mt={2}>
         <Text color={'white'} fontWeight="bold">
           {isLoading ? (
             <Text>Loading...</Text>
@@ -53,7 +64,7 @@ export default function Profile() {
             </>
           )}
         </Text>
-      </HStack>
+      </HStack> */}
 
       <MenuList p={0} width="full">
         <MenuItem

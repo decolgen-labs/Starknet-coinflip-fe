@@ -14,7 +14,7 @@ export default function HomePage() {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      height="100vh" // Optional: Set height to occupy full viewport height
+      height="100vh"
     >
       <Box position="absolute" top={5} right={8}>
         <Profile />
