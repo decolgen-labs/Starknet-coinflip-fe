@@ -10,12 +10,12 @@ import { saveUserToStorage } from '@/redux/user/user-helper';
 import { setUser } from '@/redux/user/user-slice';
 
 export default function Home() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const { account, address, status } = useAccount();
   const { connect, connectors, status: isLogin } = useConnect();
 
   const dispatch = useDispatch();
-  console.log(status);
+
   useEffect(() => {
     if (address && address != user) {
       dispatch(setUser(address));
@@ -26,7 +26,7 @@ export default function Home() {
     if (user && status === 'disconnected') {
       connect({ connector: connectors[0] });
     }
-  }, [user]);
+  }, [isLoading]);
   return (
     <>
       <Head>
