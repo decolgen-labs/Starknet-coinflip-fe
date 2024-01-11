@@ -21,7 +21,7 @@ export default function HomePage() {
       justifyContent="center"
       height="100vh" // Optional: Set height to occupy full viewport height
     >
-      <Box position="absolute" top={5} right={2}>
+      <Box position="absolute" top={5} right={8}>
         <Profile
           disConnectWallet={async () => {
             await dispatch(setUser(undefined));

@@ -17,7 +17,7 @@ export default function Home() {
   const dispatch = useDispatch();
   console.log(status);
   useEffect(() => {
-    if (address) {
+    if (address && address != user) {
       dispatch(setUser(address));
       saveUserToStorage(address);
     }
