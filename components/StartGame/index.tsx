@@ -4,15 +4,16 @@ import { useAccount, useConnect } from '@starknet-react/core';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { useAuth } from '@/components/hooks/useAuth';
-import { saveUserToStorage } from '@/redux/user/user-helper';
-import { setUser } from '@/redux/user/user-slice';
 import ConnectWallet from '../Button/ConnectWallet';
-
-import BgStart from '@/public/assets/art/bg.svg';
-import LogoIcon from '@/public/assets/logo.svg';
 import Profile from '../Profile/Profile';
 import Starked from '../Starked/Starked';
+
+import { useAuth } from '@/components/hooks/useAuth';
+import BgStart from '@/public/assets/art/bg.svg';
+import LogoIcon from '@/public/assets/logo.svg';
+import { saveUserToStorage } from '@/redux/user/user-helper';
+import { setUser } from '@/redux/user/user-slice';
+
 const StartGame = () => {
   const { user, isLoading } = useAuth();
   const { account, address, status } = useAccount();
