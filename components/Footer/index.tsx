@@ -20,15 +20,24 @@ const Footer = () => {
     },
     {
       key: 'responsibily',
-      label: 'RESPONSIBLY',
+      label: 'responsibily',
       link: '#',
     },
   ];
   return (
     <HStack>
-      {ListData.map(item => (
+      {ListData.map((item, index) => (
         <Link href={item.link} key={item.key}>
-          <Text fontSize="sm" fontWeight="bold" color="white">
+          <Text
+            fontSize="sm"
+            fontWeight="bold"
+            color="white"
+            px={2}
+            borderRight={
+              index != ListData.length - 1 ? '2px solid white' : undefined
+            }
+            textTransform="capitalize"
+          >
             {item.label}
           </Text>
         </Link>

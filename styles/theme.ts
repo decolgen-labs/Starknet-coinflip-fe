@@ -1,13 +1,20 @@
-import { extendTheme } from '@chakra-ui/react';
+import {
+  extendTheme,
+  ComponentStyleConfig,
+  ThemeConfig,
+} from '@chakra-ui/react';
 import { StyleFunctionProps } from '@chakra-ui/system';
+
 export const colors = {
   primary: {
-    100: '#D5F0DB',
-    200: '#81D192',
-    300: '#57C16E',
-    400: '#2DB24A',
-    500: '#248E3B',
-    600: '#1B6B2C',
+    green: {
+      100: '#00FFB3',
+      200: '#012E3F',
+      300: '#018576',
+      /*  400: '#2DB24A',
+      500: '#248E3B',
+      600: '#1B6B2C', */
+    },
   },
   secondary: {
     100: '#FF7D7D',
@@ -20,11 +27,28 @@ const styles = {
     body: {},
   }),
 };
+const Button: ComponentStyleConfig = {
+  variants: {
+    primary: {
+      color: 'primary.green.300',
+      bg: 'primary.green.200',
+      fontWeight: '900',
+      borderRadius: '16px',
+      border: '0.064rem solid',
+      borderColor: 'primary.green.100',
+    },
+  },
+};
+const config: ThemeConfig = {
+  initialColorMode: 'light',
+  useSystemColorMode: false,
+};
 const theme = extendTheme({
   colors,
   styles,
+  config,
   components: {
-    Text,
+    Button,
   },
 });
 
