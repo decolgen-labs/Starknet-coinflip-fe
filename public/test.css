@@ -35,7 +35,7 @@ h2 {
   }
   
   .heads {
-    background-image: url("../public/assets/coin/head.svg");
+    background-image: url("https://en.numista.com/catalogue/photos/inde/2311-original.jpg");
   }
   
   .animate-heads {
@@ -53,8 +53,7 @@ h2 {
   }
   
   .tails {
-    background-image: url("../public/assets/coin/tail.svg");
-
+    background-image: url("https://en.numista.com/catalogue/photos/inde/3165-original.jpg");
     transform: rotateY(-180deg);
   }
   
