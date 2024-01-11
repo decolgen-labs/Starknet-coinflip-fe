@@ -2,19 +2,15 @@ import {
   Box,
   Button,
   Flex,
-  Image,
-  Text,
-  useDisclosure,
+  useDisclosure
 } from '@chakra-ui/react';
 import {
   useAccount,
   useBalance,
-  useConnect,
   useContract,
   useContractRead,
   useContractWrite,
-  useDisconnect,
-  useNetwork,
+  useNetwork
 } from '@starknet-react/core';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -22,9 +18,7 @@ import abi from '../../abi/starknet.json';
 import abiToken from '../../abi/tokenEth.json';
 import config from '../../config/config';
 import { getEvent } from '../Contract/contract';
-import Loading from '../Loading/Loading';
-import ModalConnectWallet from '../Modal/ModalConnectWallet';
-import Profile from '../Profile/Profile';
+import Flip from '../Flip/Flip';
 
 export default function Starked() {
   const [staked, setStaked] = useState<number>(0);
@@ -53,6 +47,8 @@ export default function Starked() {
     address,
     watch: true,
   });
+  const [coin, setCoin] = useState(0);
+
   const {
     isOpen: isOpenLoading,
     onOpen: onOpenLoading,
@@ -78,17 +74,14 @@ export default function Starked() {
     );
   }, [address, contract, contractToken?.populateTransaction]);
 
-  const [signature, setSignature] = useState<any>();
-  const [gameId, setGameId] = useState<any>();
-
   const calls = useMemo(() => {
     if (!address || !contract) return [];
     return contract.populateTransaction['create_game']!(
       config.poolId,
       amount * 1e18,
-      0
+     coin
     );
-  }, [contract, address]);
+  }, [address, contract, amount, coin]);
 
   const { data: isApprove } = useContractRead({
     functionName: 'allowance',
@@ -115,15 +108,55 @@ export default function Starked() {
     calls: callsApprove,
   });
 
-  useEffect(() => {}, [dataWrite]);
+  useEffect(() => { }, [dataWrite]);
 
+  const handleSettle = async (transactionHash: string) => {
+    if (transactionHash) {
+      let isWon;
+      const maxAttempts = 10;
+      let isFinish = false;
+      let attempts = 0;
+      console.log("passs")
+      while (!isFinish && attempts < maxAttempts) {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 2000));
+
+          const result = await getEvent(transactionHash);
+
+          if (result && result.isWon !== undefined) {
+            isWon = result.isWon;
+          }
+
+          isFinish = true;
+
+        } catch (error) {
+          attempts++;
+          console.error('Error in handleSettle:', error);
+        }
+      }
+
+      if (!isFinish) {
+        alert("Settle failed");
+        return;
+      }
+
+      if (isWon !== undefined) {
+        refetch();
+        alert(isWon ? 'You Win' : 'You Lose');
+      } else {
+        console.error('No valid data found on the blockchain');
+      }
+    }
+  };
   const handleGame = async () => {
     try {
       onOpenLoading();
-      if (Number(isApprove) > amount) {
+      if (Number(isApprove) >= amount * 1e18) {
         const createGame = await writeAsync();
-        alert('Successfull Create Game, -> Click Settle game');
         onCloseLoading();
+
+        console.log("1")
+        await handleSettle(createGame?.transaction_hash);
       } else {
         onOpenLoading();
         await writeApprove();
@@ -135,19 +168,14 @@ export default function Starked() {
     }
   };
 
-  const handleSettle = async () => {
-    if (dataWrite && dataWrite.transaction_hash) {
-      const transactionHash = dataWrite.transaction_hash;
 
-      console.log(transactionHash);
-      const { isWon, idGame } = await getEvent(transactionHash);
-      console.log(isWon);
-      refetch();
-      alert(isWon ? 'You Win' : 'You Lose');
-    }
-  };
   return (
     <>
+      <Flip
+      coin={coin}
+      setCoin={setCoin}
+       />
+
       <Flex>
         {listItem.map((item: any, index: number) => (
           <Box
@@ -159,6 +187,7 @@ export default function Starked() {
             _hover={{ bg: 'yellow.400', textColor: 'black' }}
             py={4}
             px={6}
+            textColor={"white"}
             border={'1px'}
             borderColor={'gray.100'}
             key={index}
@@ -171,9 +200,6 @@ export default function Starked() {
       <Flex gap={4}>
         <Button py={2} mt={4} textColor={'black'} onClick={handleGame}>
           1.Create game
-        </Button>
-        <Button py={2} mt={4} textColor={'black'} onClick={handleSettle}>
-          2.Settle game
         </Button>
       </Flex>
     </>

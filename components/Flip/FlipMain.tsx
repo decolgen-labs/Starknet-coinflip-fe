@@ -8,6 +8,7 @@ export default function FlipMain({
   handleFlip,
   setIsFlipping,
   status,
+ 
 }: any) {
   return (
     <Box textColor={'white'} mt={4} bg={'#1d1d1b99'} py={8} rounded={'lg'}>

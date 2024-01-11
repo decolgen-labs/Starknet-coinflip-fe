@@ -6,7 +6,7 @@ import styles from '../../styles/CoinFlip.module.css';
 import FlipHead from './FlipHead';
 import FlipMain from './FlipMain';
 
-export default function Flip() {
+export default function Flip({coin, setCoin}:any) {
   const [result, setResult] = useState({ total: 0, heads: 0, tails: 0 });
 
   const [status, setStatus] = useState('');
@@ -48,9 +48,12 @@ export default function Flip() {
           percentageHeads={percentageHeads}
           result={result}
           percentageTails={percentageTails}
+coin={coin}
+ setCoin={setCoin}
         />
 
         <FlipMain
+
           isHeads={isHeads}
           styles={styles}
           isFlipping={isFlipping}

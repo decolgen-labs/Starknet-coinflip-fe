@@ -30,7 +30,7 @@ export default function HomePage() {
           }}
         />
       </Box>
-      <Flip />
+      
       <Starked />
     </Box>
   );
