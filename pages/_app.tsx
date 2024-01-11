@@ -11,8 +11,12 @@ import {
 } from '@starknet-react/core';
 import type { AppProps } from 'next/app';
 import { Nunito_Sans } from 'next/font/google';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import DefaultLayout from '@/layout/Layout/DefaultLayout';
+import { persistor, store } from '@/redux/store';
+import theme from '@/styles/theme';
 
 const nutinoSans = Nunito_Sans({ subsets: ['latin'] });
 
@@ -34,11 +38,15 @@ export default function App({ Component, pageProps }: AppProps) {
         connectors={connectors}
         explorer={voyager}
       >
-        <ChakraProvider>
-          <DefaultLayout>
-            <Component {...pageProps} />
-          </DefaultLayout>
-        </ChakraProvider>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <ChakraProvider theme={theme}>
+              <DefaultLayout>
+                <Component {...pageProps} />
+              </DefaultLayout>
+            </ChakraProvider>
+          </PersistGate>
+        </Provider>
       </StarknetConfig>
     </main>
   );

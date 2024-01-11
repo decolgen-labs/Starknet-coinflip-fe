@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Image,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import {
   useAccount,
   useBalance,
@@ -29,7 +22,7 @@ import Profile from '../Profile/Profile';
 export default function Header() {
   const { connect, connectors, status: isLogin } = useConnect();
   const { account, address, status } = useAccount();
-  const { isLoading, isError, error, data } = useBalance({
+  const { isLoading, isError, error, data, refetch } = useBalance({
     address,
     watch: true,
   });
@@ -42,109 +35,6 @@ export default function Header() {
 
   const { disconnect } = useDisconnect();
 
-  const { chain } = useNetwork();
-  const { contract } = useContract({
-    abi: abi,
-    address: config.contractAddress,
-  });
-
-  const { contract: contractToken } = useContract({
-    abi: abiToken,
-    address: chain.nativeCurrency.address,
-  });
-
-  const callsApprove = useMemo(() => {
-    if (!address || !contract) return [];
-    return contractToken?.populateTransaction['approve']!(
-      config.contractAddress,
-      1 * 1e18
-    );
-  }, [address, contract, contractToken?.populateTransaction]);
-
-  const [signature, setSignature] = useState<any>();
-  const [gameId, setGameId] = useState<any>();
-
-  const calls = useMemo(() => {
-    if (!address || !contract) return [];
-    return contract.populateTransaction['create_game']!(
-      config.poolId,
-      2000000000000000,
-      1
-    );
-  }, [contract, address]);
-
-  const callsSettle = useMemo(() => {
-    return (gameId: any, signature: any) => {
-      if (!address || !contract) return;
-      return contract.populateTransaction['settle']!(gameId, signature);
-    };
-  }, [contract, address]);
-
-  const { data: isApprove } = useContractRead({
-    functionName: 'allowance',
-    args: [address as string, config.contractAddress],
-    abi: abiToken,
-    address:
-      '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
-    watch: true,
-  });
-
-  console.log(Number(isApprove));
-  const {
-    writeAsync,
-    data: dataWrite,
-    isPending,
-  } = useContractWrite({
-    calls,
-  });
-
-  const {
-    writeAsync: writeApprove,
-    data: dataApprove,
-    isPending: isPendingApprove,
-  } = useContractWrite({
-    calls: callsApprove,
-  });
-
-  /* console.log(dataWrite?.transaction_hash); */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleGame = async () => {
-    try {
-      if (Number(isApprove) > 0) {
-        onOpenLoading();
-        await writeAsync();
-        onCloseLoading();
-      } else {
-        onOpenLoading();
-        await writeApprove();
-
-        onCloseLoading();
-      }
-
-      const { verifyResult, idGame } = await getEvent(
-        '0x14c7334eed2284e198aff5a4a4a40a86978ea668cf6795e28a50b2562504e3a'
-      );
-
-      if (verifyResult !== null && idGame !== null) {
-        const settleCalls = callsSettle(verifyResult, idGame);
-        const {
-          writeAsync: writeSettle,
-          data: dataSettle,
-          isPending: isPendingSettle,
-          // eslint-disable-next-line react-hooks/rules-of-hooks
-        } = useContractWrite({ calls: settleCalls });
-
-        if (writeSettle) {
-          const settle = await writeSettle();
-          console.log(settle);
-        }
-      }
-
-      // }
-    } catch (error) {}
-  };
-
-  useEffect(() => {}, [handleGame]);
   return (
     <>
       <Flex
@@ -153,9 +43,6 @@ export default function Header() {
         justifyContent={'space-between'}
         alignItems={'center'}
       >
-        <Box>
-          <Image src="/assets/logo.svg" alt=""></Image>
-        </Box>
         <Flex
           alignItems={'center'}
           bg={'#1d1d1b99'}
@@ -194,10 +81,6 @@ export default function Header() {
             </Box>
           )}
         </Flex>
-
-        <Button textColor={'black'} onClick={handleGame}>
-          Create game
-        </Button>
       </Flex>
 
       <ModalConnectWallet isOpen={isOpen} onClose={onClose}>
