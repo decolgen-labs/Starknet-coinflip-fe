@@ -17,9 +17,9 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
         position="relative"
       >
         {children}
-        <Center position="absolute" w="full" bottom={2}>
+        {/*  <Center position="absolute" w="full" bottom={2}>
           <Footer />
-        </Center>
+        </Center> */}
       </Box>
     </>
   );

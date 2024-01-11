@@ -23,14 +23,14 @@ export default function HomePage() {
     >
       <Box position="absolute" top={5} right={2}>
         <Profile
-          disConnectWallet={() => {
-            disconnect();
-            removeUserFromStorage();
-            dispatch(setUser(undefined));
+          disConnectWallet={async () => {
+            await dispatch(setUser(undefined));
+            await removeUserFromStorage();
+            await disconnect();
           }}
         />
       </Box>
-      
+
       <Starked />
     </Box>
   );

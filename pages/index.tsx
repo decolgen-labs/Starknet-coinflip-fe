@@ -1,4 +1,4 @@
-import { useAccount } from '@starknet-react/core';
+import { useAccount, useConnect } from '@starknet-react/core';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -12,14 +12,21 @@ import { setUser } from '@/redux/user/user-slice';
 export default function Home() {
   const { user } = useAuth();
   const { account, address, status } = useAccount();
-  console.log('Status', status);
+  const { connect, connectors, status: isLogin } = useConnect();
+
   const dispatch = useDispatch();
+  console.log(status);
   useEffect(() => {
     if (address) {
       dispatch(setUser(address));
       saveUserToStorage(address);
     }
   }, [address]);
+  useEffect(() => {
+    if (user && status === 'disconnected') {
+      connect({ connector: connectors[0] });
+    }
+  }, [user]);
   return (
     <>
       <Head>
