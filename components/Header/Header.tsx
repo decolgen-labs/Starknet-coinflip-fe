@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Image,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import {
   useAccount,
   useBalance,

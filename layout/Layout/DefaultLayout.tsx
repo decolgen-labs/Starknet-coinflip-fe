@@ -14,8 +14,12 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
         bgRepeat="no-repeat"
         backgroundSize="cover"
         overflow="hidden"
+        position="relative"
       >
         {children}
+        <Center position="absolute" w="full" bottom={2}>
+          <Footer />
+        </Center>
       </Box>
     </>
   );

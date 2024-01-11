@@ -9,8 +9,10 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { FaUserCircle } from 'react-icons/fa';
-
-export default function Profile({ disConnectWallet }: any) {
+interface IProps {
+  disConnectWallet: () => void;
+}
+export default function Profile({ disConnectWallet }: IProps) {
   return (
     <Menu>
       <MenuButton
@@ -22,7 +24,7 @@ export default function Profile({ disConnectWallet }: any) {
       </MenuButton>
       <MenuList minWidth={'fit-content'} p={0}>
         <MenuItem>
-          <Text onClick={() => disConnectWallet()} fontSize={'sm'}>
+          <Text onClick={disConnectWallet} fontSize={'sm'}>
             Log out
           </Text>
         </MenuItem>

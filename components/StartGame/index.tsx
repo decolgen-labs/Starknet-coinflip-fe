@@ -1,6 +1,8 @@
 'use client';
-import { Box, Button, Center, Icon } from '@chakra-ui/react';
+import { Box, Center, Icon } from '@chakra-ui/react';
 import React from 'react';
+
+import ConnectWallet from '../Button/ConnectWallet';
 
 import BgStart from '@/public/assets/art/bg-start.svg';
 import LogoIcon from '@/public/assets/logo.svg';
@@ -23,8 +25,8 @@ const StartGame = () => {
           width="full"
           flexDirection="column"
         >
-          <Icon as={LogoIcon} width={'120px'} height="auto" />
-          <Button>Connect Wallet</Button>
+          <Icon as={LogoIcon} width={'120px'} height="auto" mb={10} />
+          <ConnectWallet />
         </Center>
       </Box>
     </>
