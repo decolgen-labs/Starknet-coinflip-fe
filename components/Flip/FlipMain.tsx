@@ -141,31 +141,34 @@ export default function FlipMain({
             Create game
           </Button>
         </Flex>
-
-        {statusWon ? (
-          <Text
-            border={'1px'}
-            borderColor={'green.400'}
-            textColor={'green.400'}
-            px={12}
-            rounded={'xl'}
-            mt={4}
-            py={2}
-          >
-            You win
-          </Text>
-        ) : (
-          <Text
-            border={'1px'}
-            px={12}
-            rounded={'xl'}
-            mt={4}
-            py={2}
-            textColor={'secondary.200'}
-            borderColor={'secondary.200'}
-          >
-            You Lose
-          </Text>
+        {statusWon && !isLoading && (
+          <>
+            {statusWon ? (
+              <Text
+                border={'1px'}
+                borderColor={'green.400'}
+                textColor={'green.400'}
+                px={12}
+                rounded={'xl'}
+                mt={4}
+                py={2}
+              >
+                You win
+              </Text>
+            ) : (
+              <Text
+                border={'1px'}
+                px={12}
+                rounded={'xl'}
+                mt={4}
+                py={2}
+                textColor={'secondary.200'}
+                borderColor={'secondary.200'}
+              >
+                You Lose
+              </Text>
+            )}
+          </>
         )}
       </Box>
     </Box>

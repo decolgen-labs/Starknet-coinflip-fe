@@ -36,6 +36,16 @@ const Button: ComponentStyleConfig = {
       borderRadius: '16px',
       border: '0.064rem solid',
       borderColor: 'primary.green.100',
+      transition: '0.2s ease all',
+      _hover: {
+        border: '4px solid #00FFB3',
+        bg: 'primary.green.200',
+        color: '#00FFB3',
+      },
+      _active: {
+        bg: '#00FFB3',
+        color: 'primary.green.200',
+      },
     },
   },
 };

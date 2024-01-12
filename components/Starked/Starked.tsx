@@ -1,4 +1,3 @@
-import { useDisclosure } from '@chakra-ui/react';
 import {
   useAccount,
   useBalance,
@@ -15,8 +14,6 @@ import abiToken from '../../abi/tokenEth.json';
 import config from '../../config/config';
 import { getEvent } from '../Contract/contract';
 import Flip from '../Flip/Flip';
-import { useAuth } from '../hooks/useAuth';
-import Loading from '../Loading/Loading';
 
 import { setUserLoading } from '@/redux/user/user-slice';
 export default function Starked() {
@@ -30,12 +27,6 @@ export default function Starked() {
     watch: true,
   });
   const [coin, setCoin] = useState(0);
-
-  const {
-    isOpen: isOpenLoading,
-    onOpen: onOpenLoading,
-    onClose: onCloseLoading,
-  } = useDisclosure();
 
   const { chain } = useNetwork();
   const { contract } = useContract({
@@ -132,19 +123,14 @@ export default function Starked() {
   };
   const handleGame = async () => {
     try {
-      onOpenLoading();
       if (Number(isApprove) >= amount * 1e18) {
         const createGame = await writeAsync();
         await handleSettle(createGame?.transaction_hash);
-        onCloseLoading();
       } else {
-        onOpenLoading();
         await writeApprove();
-        onCloseLoading();
       }
     } catch (error) {
       console.error('Error in handleGame:', error);
-      onCloseLoading();
     }
   };
 
@@ -159,8 +145,6 @@ export default function Starked() {
         staked={staked}
         statusWon={statusWon}
       />
-
-      <Loading isOpen={isOpenLoading} onClose={onCloseLoading} />
     </>
   );
 }

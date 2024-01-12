@@ -14,7 +14,7 @@ const StartGame = () => {
 
   return (
     <>
-      <Box position="relative" height="full">
+      <Box position="relative" height="full" zIndex={10}>
         <Icon
           p={4}
           as={BgStart}
