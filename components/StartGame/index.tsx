@@ -6,7 +6,9 @@ import Profile from '../Profile/Profile';
 import Starked from '../Starked/Starked';
 
 import { useAuth } from '@/components/hooks/useAuth';
-import BgStart from '@/public/assets/art/bg.svg';
+import BgStart from '@/public/assets/art/bg-left.svg';
+import BgRight from '@/public/assets/art/bg-right.svg';
+
 import LogoIcon from '@/public/assets/logo.svg';
 
 const StartGame = () => {
@@ -16,14 +18,21 @@ const StartGame = () => {
     <>
       <Box position="relative" height="full" zIndex={10}>
         <Icon
-          p={4}
           as={BgStart}
-          height="100vh"
-          width="100%"
+          height="100%"
+          width="40%"
           position="absolute"
           top={0}
-          left={0}
+          left={4}
           right={0}
+        />
+        <Icon
+          as={BgRight}
+          height="100%"
+          width="40%"
+          position="absolute"
+          top={0}
+          right={4}
         />
         <Center
           alignItems="center"
