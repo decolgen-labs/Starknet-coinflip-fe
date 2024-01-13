@@ -5,6 +5,8 @@ import styles from '../../styles/CoinFlip.module.css';
 
 import FlipHead from './FlipHead';
 import FlipMain from './FlipMain';
+import ConfettiExplosion from 'react-confetti-explosion';
+import Confetti from '../Motion/Confetti';
 
 export default function Flip({
   coin,
@@ -14,6 +16,10 @@ export default function Flip({
   setAmount,
   staked,
   statusWon,
+  resetGame,
+  refetch,
+  statusFlip,
+  setStatusFlip,
 }: any) {
   const [result, setResult] = useState({ total: 0, heads: 0, tails: 0 });
 
@@ -48,6 +54,8 @@ export default function Flip({
 
   return (
     <Box>
+      {/* <ConfettiExplosion duration={3000} particleCount={200} /> */}
+
       <Flex flexDirection={'column'}>
         <FlipHead
           percentageHeads={percentageHeads}
@@ -55,6 +63,8 @@ export default function Flip({
           percentageTails={percentageTails}
           coin={coin}
           setCoin={setCoin}
+          statusFlip={statusFlip}
+          statusWon={statusWon}
         />
 
         <FlipMain
@@ -68,7 +78,12 @@ export default function Flip({
           setStaked={setStaked}
           setAmount={setAmount}
           staked={staked}
+          coin={coin}
           statusWon={statusWon}
+          resetGame={resetGame}
+          refetch={refetch}
+          statusFlip={statusFlip}
+          setStatusFlip={setStatusFlip}
         />
       </Flex>
     </Box>

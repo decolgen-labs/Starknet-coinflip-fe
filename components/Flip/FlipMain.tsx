@@ -3,6 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import IconETH from '../../public/assets/icons/eth.svg';
 import { useAuth } from '../hooks/useAuth';
+import ConfettiExplosion from 'react-confetti-explosion';
+import Confetti from '../Motion/Confetti';
+import { useAccount, useBalance } from '@starknet-react/core';
 
 export default function FlipMain({
   isHeads,
@@ -15,6 +18,10 @@ export default function FlipMain({
   setAmount,
   staked,
   statusWon,
+  coin,
+  resetGame,
+  statusFlip,
+  setStatusFlip,
 }: any) {
   const listItem = [
     {
@@ -34,12 +41,25 @@ export default function FlipMain({
     },
   ];
 
+  console.log(coin);
   const [headsCount, setHeadsCount] = useState(0);
   const [tailsCount, setTailsCount] = useState(0);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState<boolean>(false);
   const { isLoading } = useAuth();
   const coinRef = useRef(null);
 
+  const { account, address } = useAccount();
+
+  const {
+    isLoading: isLoadingBalance,
+    isError,
+    error,
+    data,
+    refetch,
+  } = useBalance({
+    address,
+    watch: true,
+  });
   const flipCoin = (result: 'heads' | 'tails') => {
     const coin = coinRef.current as HTMLElement | null;
 
@@ -52,51 +72,39 @@ export default function FlipMain({
         } else {
           setTailsCount(tailsCount + 1);
         }
-        setStatus(result);
-      }, 6900);
-    }, 100);
+
+        setStatusFlip(true);
+        refetch();
+      }, 3000);
+    }, 1000);
   };
 
-  console.log(statusWon);
   useEffect(() => {
     if (statusWon !== undefined) {
-      flipCoin(statusWon ? 'heads' : 'tails');
+      if (statusWon) {
+        flipCoin(coin === 0 ? 'heads' : 'tails');
+      } else {
+        flipCoin(coin === 1 ? 'heads' : 'tails');
+      }
     }
-  }, statusWon);
+  }, [statusWon, coin]);
   return (
-    <Box textColor={'white'} mt={4} bg={'#1d1d1b99'} py={8} rounded={'lg'}>
-      {/* <Box position={'relative'} height={'15rem'}>
-        <Box
-          className={`${styles.coin} ${isFlipping ? styles.flipping : ''}`}
-          width={'100%'}
-        >
-          <Box
-            display={'flex'}
-            width={'100%'}
-            justifyContent={'center'}
-            className={`${styles.side} ${styles.heads} ${
-              isHeads ? styles.visible : styles.hidden
-            }`}
-          >
-            <Image src="/assets/coin/head.svg" alt="" />
-          </Box>
-          <Box
-            display={'flex'}
-            width={'100%'}
-            justifyContent={'center'}
-            className={`${styles.side} ${styles.tails}  ${!isHeads ? '' : ''}`}
-          >
-            <Image src="/assets/coin/tail.svg" alt="" />
-          </Box>
-        </Box>
-      </Box> */}
-
+    <Box textColor={'white'} bg={'#1d1d1b99'} my={6} rounded={'lg'}>
       <Box className="container">
         <Box ref={coinRef} id="coin" className="">
           <Box id="heads" className="heads"></Box>
           <Box id="tails" className="tails"></Box>
         </Box>
-        <Flex bg={'black'} p={1} gap={1} rounded={'2xl'}>
+        <Flex
+          bg={'black'}
+          mt={6}
+          p={1}
+          gap={1}
+          flexWrap={'wrap'}
+          mx={4}
+          justifyContent={'space-between'}
+          rounded={'2xl'}
+        >
           {listItem.map((item: any, index: number) => (
             <Button
               onClick={() => {
@@ -123,10 +131,11 @@ export default function FlipMain({
             </Button>
           ))}
         </Flex>
-        <Flex gap={4} justifyContent={'center'}>
+        <Flex gap={4} mt={6} justifyContent={'center'}>
           <Button
             py={2}
             mt={4}
+            px={16}
             textColor={'black'}
             border={'1px'}
             borderColor={'#018576'}
@@ -136,25 +145,30 @@ export default function FlipMain({
             isLoading={isLoading}
             color={'#018576'}
             rounded={'2xl'}
-            onClick={handleGame}
+            onClick={statusWon === undefined ? handleGame : resetGame}
+            fontSize={'1.25rem'}
           >
-            Create game
+            {statusWon !== undefined ? 'Play again' : 'Flip it!'}
           </Button>
         </Flex>
-        {statusWon && !isLoading && (
+
+        {statusWon !== undefined && !isLoading && statusFlip && (
           <>
             {statusWon ? (
-              <Text
-                border={'1px'}
-                borderColor={'green.400'}
-                textColor={'green.400'}
-                px={12}
-                rounded={'xl'}
-                mt={4}
-                py={2}
-              >
-                You win
-              </Text>
+              <>
+                <Confetti />
+                <Text
+                  border={'1px'}
+                  borderColor={'green.400'}
+                  textColor={'green.400'}
+                  px={12}
+                  rounded={'xl'}
+                  mt={4}
+                  py={2}
+                >
+                  You win
+                </Text>
+              </>
             ) : (
               <Text
                 border={'1px'}

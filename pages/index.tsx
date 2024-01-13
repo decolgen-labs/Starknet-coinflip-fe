@@ -33,6 +33,7 @@ export default function Home() {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FlipCoin</title>
       </Head>
       <StartGame />
     </>

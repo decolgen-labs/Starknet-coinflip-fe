@@ -20,6 +20,8 @@ export default function Starked() {
   const [staked, setStaked] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0.002);
   const [statusWon, setStatusWon] = useState<any>();
+  const [statusFlip, setStatusFlip] = useState<boolean>(false);
+
   const { account, address, status } = useAccount();
   const dispatch = useDispatch();
   const { isLoading, isError, error, data, refetch } = useBalance({
@@ -65,6 +67,7 @@ export default function Starked() {
     watch: true,
   });
 
+  console.log(coin);
   const {
     writeAsync,
     data: dataWrite,
@@ -113,7 +116,6 @@ export default function Starked() {
       }
 
       if (isWon !== undefined) {
-        refetch();
         setStatusWon(isWon);
       } else {
         console.error('No valid data found on the blockchain');
@@ -134,6 +136,13 @@ export default function Starked() {
     }
   };
 
+  const resetGame = () => {
+    setCoin(0);
+    setStatusWon(undefined);
+    refetch();
+    setStatusFlip(false);
+  };
+
   return (
     <>
       <Flip
@@ -144,6 +153,10 @@ export default function Starked() {
         setAmount={setAmount}
         staked={staked}
         statusWon={statusWon}
+        resetGame={resetGame}
+        refetch={refetch}
+        statusFlip={statusFlip}
+        setStatusFlip={setStatusFlip}
       />
     </>
   );

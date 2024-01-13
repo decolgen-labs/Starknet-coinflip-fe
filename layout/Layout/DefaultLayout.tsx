@@ -1,10 +1,11 @@
 'use client';
-import { Box, Center } from '@chakra-ui/react';
+import { Box, Center, Text, useBreakpointValue } from '@chakra-ui/react';
 import React, { PropsWithChildren, useState } from 'react';
 
 import Footer from '@/components/Footer';
 import SociaLink from '@/components/Footer/SociaLink';
 import { colors } from '@/styles/theme';
+import Profile from '@/components/Profile/Profile';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
   // Get Reference to component and get size and position of it
@@ -30,6 +31,9 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => ref.current?.removeEventListener('mousemove', handleMouse);
   }, [ref]);
+
+  const md = useBreakpointValue({ base: false, md: true });
+
   return (
     <>
       <Box
@@ -65,9 +69,13 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
         }}
       >
         {children}
-        <Box position="absolute" right={20} bottom="12%" zIndex={10}>
-          <SociaLink />
-        </Box>
+
+        {md && (
+          <Box position="absolute" right={20} bottom="12%" zIndex={10}>
+            <SociaLink />
+          </Box>
+        )}
+
         <Center position="absolute" w="full" bottom={10} zIndex={10}>
           <Footer />
         </Center>

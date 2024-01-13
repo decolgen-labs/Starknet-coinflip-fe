@@ -18,6 +18,8 @@ import { useAuth } from '../hooks/useAuth';
 import { removeUserFromStorage } from '@/redux/user/user-helper';
 import { setUser, setUserLoading } from '@/redux/user/user-slice';
 
+import { MdLogout } from 'react-icons/md';
+
 export default function Profile() {
   const { user } = useAuth();
   const { isLoading, data } = useBalance({
@@ -27,7 +29,7 @@ export default function Profile() {
   const { disconnect } = useDisconnect();
   const dispatch = useDispatch();
   return (
-    <Menu>
+    <Menu direction="ltr">
       <MenuButton
         textColor={'black'}
         as={Button}
@@ -35,7 +37,15 @@ export default function Profile() {
         rounded={'2xl'}
         color={'white'}
         variant={'hover'}
-        rightIcon={<ChevronDownIcon />}
+        rightIcon={<MdLogout />}
+        onClick={async () => {
+          await dispatch(setUserLoading(true));
+          removeUserFromStorage();
+          await dispatch(setUser(undefined));
+          await disconnect();
+          dispatch(setUserLoading(false));
+        }}
+        fontSize={'sm'}
       >
         <HStack>
           <FaUserCircle />
@@ -49,23 +59,10 @@ export default function Profile() {
               </>
             )}
           </Text>
-          {/* <Text>{user && user.slice(0, 4) + '...' + user.slice(-4)}</Text> */}
         </HStack>
       </MenuButton>
-      {/* <HStack mt={2}>
-        <Text color={'white'} fontWeight="bold">
-          {isLoading ? (
-            <Text>Loading...</Text>
-          ) : (
-            <>
-              {(parseFloat(data?.value as any) / 1e18).toFixed(6)}
-              {data?.symbol}
-            </>
-          )}
-        </Text>
-      </HStack> */}
 
-      <MenuList p={0} width="full">
+      {/* <MenuList p={0} width="full">
         <MenuItem
           onClick={async () => {
             await dispatch(setUserLoading(true));
@@ -78,7 +75,7 @@ export default function Profile() {
         >
           <Text>Log out</Text>
         </MenuItem>
-      </MenuList>
+      </MenuList> */}
     </Menu>
   );
 }
