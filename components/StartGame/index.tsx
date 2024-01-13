@@ -1,5 +1,6 @@
 'use client';
 import { Box, Center, Icon, useBreakpointValue } from '@chakra-ui/react';
+import { useState } from 'react';
 
 import ConnectWallet from '../Button/ConnectWallet';
 import Profile from '../Profile/Profile';
@@ -9,12 +10,9 @@ import { useAuth } from '@/components/hooks/useAuth';
 import BgStart from '@/public/assets/art/bg-left.svg';
 import BgRight from '@/public/assets/art/bg-right.svg';
 import LogoIcon from '@/public/assets/logo.svg';
-import Confetti from '../Motion/Confetti';
-import { useState } from 'react';
-import ConfettiExplosion from 'react-confetti-explosion';
 const StartGame = () => {
   const { user } = useAuth();
-  const [isExploding, setIsExploding] = useState(false);
+  // const [isExploding, setIsExploding] = useState(false);
 
   const md = useBreakpointValue({ base: false, md: true });
   return (

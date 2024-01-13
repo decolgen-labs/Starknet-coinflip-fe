@@ -1,24 +1,14 @@
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import {
-  Button,
-  HStack,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Text,
-} from '@chakra-ui/react';
+import { Button, HStack, Menu, MenuButton, Text } from '@chakra-ui/react';
 import { useBalance, useDisconnect } from '@starknet-react/core';
 import React from 'react';
 import { FaUserCircle } from 'react-icons/fa';
+import { MdLogout } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 
 import { useAuth } from '../hooks/useAuth';
 
 import { removeUserFromStorage } from '@/redux/user/user-helper';
 import { setUser, setUserLoading } from '@/redux/user/user-slice';
-
-import { MdLogout } from 'react-icons/md';
 
 export default function Profile() {
   const { user } = useAuth();

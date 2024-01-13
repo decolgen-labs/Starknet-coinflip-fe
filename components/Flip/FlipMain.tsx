@@ -1,11 +1,11 @@
 import { Box, Button, Flex, Icon, Image, Text } from '@chakra-ui/react';
+import { useAccount, useBalance } from '@starknet-react/core';
 import React, { useEffect, useRef, useState } from 'react';
+import ConfettiExplosion from 'react-confetti-explosion';
 
 import IconETH from '../../public/assets/icons/eth.svg';
 import { useAuth } from '../hooks/useAuth';
-import ConfettiExplosion from 'react-confetti-explosion';
 import Confetti from '../Motion/Confetti';
-import { useAccount, useBalance } from '@starknet-react/core';
 
 export default function FlipMain({
   isHeads,
@@ -72,7 +72,6 @@ export default function FlipMain({
         } else {
           setTailsCount(tailsCount + 1);
         }
-<<<<<<< HEAD
 
         setStatusFlip(true);
         refetch();
@@ -91,49 +90,6 @@ export default function FlipMain({
   }, [statusWon, coin]);
   return (
     <Box textColor={'white'} bg={'#1d1d1b99'} my={6} rounded={'lg'}>
-=======
-        setStatus(result);
-        coin?.setAttribute('class', '');
-      }, 6900);
-    }, 100);
-  };
-
-  useEffect(() => {
-    if (statusWon !== undefined && !isLoading) {
-      flipCoin(statusWon ? 'heads' : 'tails');
-      console.log('Current S', statusWon);
-    }
-  }, [isLoading]);
-
-  return (
-    <Box textColor={'white'} mt={4} py={8} rounded={'lg'}>
-      {/* <Box position={'relative'} height={'15rem'}>
-        <Box
-          className={`${styles.coin} ${isFlipping ? styles.flipping : ''}`}
-          width={'100%'}
-        >
-          <Box
-            display={'flex'}
-            width={'100%'}
-            justifyContent={'center'}
-            className={`${styles.side} ${styles.heads} ${
-              isHeads ? styles.visible : styles.hidden
-            }`}
-          >
-            <Image src="/assets/coin/head.svg" alt="" />
-          </Box>
-          <Box
-            display={'flex'}
-            width={'100%'}
-            justifyContent={'center'}
-            className={`${styles.side} ${styles.tails}  ${!isHeads ? '' : ''}`}
-          >
-            <Image src="/assets/coin/tail.svg" alt="" />
-          </Box>
-        </Box>
-      </Box> */}
-
->>>>>>> cb784e05696f196c002672c5ebeb0cf44e64790c
       <Box className="container">
         <Box ref={coinRef} id="coin" className="">
           <Box id="heads" className="heads"></Box>

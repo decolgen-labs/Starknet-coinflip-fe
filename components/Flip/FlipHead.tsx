@@ -8,6 +8,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
+
 import IconLignt from '../../public/assets/icons/light.svg';
 export default function FlipHead({
   percentageHeads,

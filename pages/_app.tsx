@@ -18,8 +18,6 @@ import DefaultLayout from '@/layout/Layout/DefaultLayout';
 import { persistor, store } from '@/redux/store';
 import theme from '@/styles/theme';
 import '../styles/globals.css';
-import ConfettiExplosion from 'react-confetti-explosion';
-import Confetti from '@/components/Motion/Confetti';
 
 const nutinoSans = Nunito_Sans({ subsets: ['latin'] });
 

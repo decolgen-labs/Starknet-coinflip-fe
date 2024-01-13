@@ -1,11 +1,10 @@
 'use client';
-import { Box, Center, Text, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Center, useBreakpointValue } from '@chakra-ui/react';
 import React, { PropsWithChildren, useState } from 'react';
 
 import Footer from '@/components/Footer';
 import SociaLink from '@/components/Footer/SociaLink';
 import { colors } from '@/styles/theme';
-import Profile from '@/components/Profile/Profile';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
   // Get Reference to component and get size and position of it
@@ -76,7 +75,12 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
           </Box>
         )}
 
-        <Center position="absolute" w="full" bottom={10} zIndex={10}>
+        <Center
+          position="absolute"
+          w="full"
+          bottom={{ md: 10, base: 3 }}
+          zIndex={10}
+        >
           <Footer />
         </Center>
       </Box>
