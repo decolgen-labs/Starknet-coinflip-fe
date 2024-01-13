@@ -8,7 +8,6 @@ import Starked from '../Starked/Starked';
 import { useAuth } from '@/components/hooks/useAuth';
 import BgStart from '@/public/assets/art/bg-left.svg';
 import BgRight from '@/public/assets/art/bg-right.svg';
-
 import LogoIcon from '@/public/assets/logo.svg';
 import Confetti from '../Motion/Confetti';
 import { useState } from 'react';
