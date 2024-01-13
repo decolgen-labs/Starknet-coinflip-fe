@@ -18,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     if (address && address != user) {
-      console.log('Dectect adress');
+      console.log('Dectect address');
       dispatch(setUser(address));
       saveUserToStorage(address);
     }
@@ -28,7 +28,7 @@ export default function Home() {
       console.log('Dectect dis');
       connect({ connector: connectors[0] });
     }
-  }, []);
+  }, [isLoading]);
   return (
     <>
       <Head>

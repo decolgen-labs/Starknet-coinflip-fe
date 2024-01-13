@@ -8,7 +8,7 @@ export default function FlipMain({
   isHeads,
   styles,
   isFlipping,
-  handleFlip,
+
   setIsFlipping,
   handleGame,
   setStaked,
@@ -53,18 +53,20 @@ export default function FlipMain({
           setTailsCount(tailsCount + 1);
         }
         setStatus(result);
+        coin?.setAttribute('class', '');
       }, 6900);
     }, 100);
   };
 
-  console.log(statusWon);
   useEffect(() => {
-    if (statusWon !== undefined) {
+    if (statusWon !== undefined && !isLoading) {
       flipCoin(statusWon ? 'heads' : 'tails');
+      console.log('Current S', statusWon);
     }
-  }, statusWon);
+  }, [isLoading]);
+
   return (
-    <Box textColor={'white'} mt={4} bg={'#1d1d1b99'} py={8} rounded={'lg'}>
+    <Box textColor={'white'} mt={4} py={8} rounded={'lg'}>
       {/* <Box position={'relative'} height={'15rem'}>
         <Box
           className={`${styles.coin} ${isFlipping ? styles.flipping : ''}`}

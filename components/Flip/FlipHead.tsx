@@ -1,4 +1,4 @@
-import { Box, Checkbox, Flex, Radio, RadioGroup, Text } from '@chakra-ui/react';
+import { Box, Flex, Radio, RadioGroup, Text } from '@chakra-ui/react';
 import React from 'react';
 
 export default function FlipHead({

@@ -22,27 +22,6 @@ export default function Flip({
   const [isHeads, setIsHeads] = useState(true);
   const [isFlipping, setIsFlipping] = useState(false);
 
-  const handleFlip = () => {
-    if (isFlipping) return;
-
-    setIsFlipping(true);
-
-    const flipResult = Math.random();
-    setTimeout(() => {
-      const newResult = { ...result, total: result.total + 1 };
-      if (flipResult <= 0.5) {
-        setIsHeads(true);
-        newResult.heads++;
-        setStatus('HEAD');
-      } else {
-        setIsHeads(false);
-        newResult.tails++;
-        setStatus('TAIL');
-      }
-      setResult(newResult);
-    }, 3000);
-  };
-
   const percentageHeads = (result.heads / result.total) * 100 || 0;
   const percentageTails = (result.tails / result.total) * 100 || 0;
 
@@ -61,7 +40,6 @@ export default function Flip({
           isHeads={isHeads}
           styles={styles}
           isFlipping={isFlipping}
-          handleFlip={handleFlip}
           setIsFlipping={setIsFlipping}
           status={status}
           handleGame={handleGame}
