@@ -1,30 +1,50 @@
-import { Box, Checkbox, Flex, Radio, RadioGroup, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Checkbox,
+  Flex,
+  Icon,
+  Radio,
+  RadioGroup,
+  Text,
+} from '@chakra-ui/react';
 import React from 'react';
 
+import IconLignt from '../../public/assets/icons/light.svg';
 export default function FlipHead({
   percentageHeads,
   result,
   percentageTails,
   coin,
   setCoin,
+  statusFlip,
+  statusWon,
 }: any) {
+  console.log(statusFlip);
+  const borderColorStt = !statusFlip
+    ? '#00FFB3'
+    : statusFlip && statusWon
+      ? '#00FFB3'
+      : 'secondary.200';
   return (
     <Box
       border={'1px'}
-      borderColor={'#00FFB3'}
+      borderColor={borderColorStt}
       textColor="white"
       bg={'#012E3F'}
-      p={8}
+      py={4}
+      px={5}
       rounded={'8px'}
+      w={'fit-content'}
+      mx={'auto'}
     >
       <RadioGroup defaultValue="1">
         <Flex gap={8} alignItems="center" justifyContent={'space-between'}>
           <Box
+            w={{ lg: '9.5rem', base: 'fit-content' }}
             border="1px"
-            px={6}
-            py={4}
-            w={'9.5rem'}
-            borderColor={'#00FFB3'}
+            px={4}
+            py={3}
+            borderColor={borderColorStt}
             rounded={'8px'}
             textAlign={'center'}
           >
@@ -37,12 +57,13 @@ export default function FlipHead({
             >
               {percentageHeads.toFixed(0)}%
             </Text> */}
-            <Text my={0} whiteSpace={'pre'} textColor={'#00FFB3'}>
+            <Text my={0} whiteSpace={'pre'} textColor={borderColorStt}>
               {/* {result.heads} */}
               HEADS
             </Text>
 
             <Radio
+              isDisabled={statusFlip}
               mt={2}
               colorScheme="yellow"
               value="1"
@@ -54,52 +75,19 @@ export default function FlipHead({
           </Box>
 
           <Box>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="37"
-              height="52"
-              viewBox="0 0 37 52"
-              fill="none"
-            >
-              <path
-                d="M11.3168 49.292H25.292C32.2796 49.292 34.6088 46.9628 34.6088 39.9752V12.0248C34.6088 5.0372 32.2796 2.70801 25.292 2.70801H11.3168C4.3292 2.70801 2 5.0372 2 12.0248V39.9752C2 46.9628 4.3292 49.292 11.3168 49.292Z"
-                stroke="#00FFB3"
-                strokeWidth="3.4938"
-                strokeMiterlimit="10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                opacity="0.4"
-                d="M18.3045 39.9752C22.1637 39.9752 25.2921 36.8468 25.2921 32.9876C25.2921 29.1283 22.1637 26 18.3045 26C14.4452 26 11.3169 29.1283 11.3169 32.9876C11.3169 36.8468 14.4452 39.9752 18.3045 39.9752Z"
-                stroke="#00FFB3"
-                strokeWidth="3.4938"
-                strokeMiterlimit="10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                opacity="0.4"
-                d="M18.3043 19.0125C20.2338 19.0125 21.7981 17.4483 21.7981 15.5187C21.7981 13.5891 20.2338 12.0249 18.3043 12.0249C16.3748 12.0249 14.8105 13.5891 14.8105 15.5187C14.8105 17.4483 16.3748 19.0125 18.3043 19.0125Z"
-                stroke="#00FFB3"
-                strokeWidth="3.4938"
-                strokeMiterlimit="10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <Icon color={borderColorStt} as={IconLignt} w={12} h={12} />
           </Box>
           <Box
-            w={'9.5rem'}
+            w={{ lg: '9.5rem', base: 'fit-content' }}
             border="1px"
-            px={6}
-            py={4}
-            borderColor={'#00FFB3'}
+            px={4}
+            py={2}
+            borderColor={borderColorStt}
             rounded={'8px'}
             textAlign={'center'}
           >
             <Text
-              textColor={'#00FFB3'}
+              textColor={borderColorStt}
               textAlign={'center'}
               whiteSpace={'pre'}
               my={0}
@@ -108,12 +96,13 @@ export default function FlipHead({
             >
               {/* {percentageTails.toFixed(0)}% */}
             </Text>
-            <Text textColor={'#00FFB3'} my={0} whiteSpace={'pre'}>
+            <Text textColor={borderColorStt} my={0} whiteSpace={'pre'}>
               {/* {result.tails}  */}
               TAILS
             </Text>
 
             <Radio
+              isDisabled={statusFlip}
               mt={2}
               colorScheme="yellow"
               value="2"

@@ -1,5 +1,5 @@
 import { Icon } from '@chakra-ui/icons';
-import { Button, Flex, useDisclosure, Text } from '@chakra-ui/react';
+import { Button, Flex, useDisclosure, Text, Box } from '@chakra-ui/react';
 import { useAccount, useConnect } from '@starknet-react/core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -26,31 +26,31 @@ const ConnectWallet = () => {
         </Button>
       ))}
       <ModalConnectWallet isOpen={isOpen} onClose={onClose}>
-        <>
+        <Box px={2} pb={4}>
           {connectors.map((connector, index) => (
             <Flex
-              py={8}
+              py={3}
               key={`connect2-${index}`}
-              border={'1px'}
-              borderColor={'#018576'}
               alignItems={'center'}
               rounded={'lg'}
+              gap={{ md: 4, base: 3 }}
               cursor={'pointer'}
+              _hover={{
+                bg: 'primary.green.300',
+              }}
               onClick={async () => {
                 await connect({ connector });
-
                 onClose();
               }}
-              gap={2}
-              justifyContent={'center'}
+              px={8}
             >
               <Icon as={IconWallet} fontSize={'2xl'} />
-              <Text fontSize={'2xl'} textColor="white">
-                Argent
+              <Text fontSize={'lg'} textColor="white">
+                Argent Wallet
               </Text>
             </Flex>
           ))}
-        </>
+        </Box>
       </ModalConnectWallet>
     </>
   );

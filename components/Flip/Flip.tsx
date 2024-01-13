@@ -1,7 +1,9 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { useState } from 'react';
+import ConfettiExplosion from 'react-confetti-explosion';
 
 import styles from '../../styles/CoinFlip.module.css';
+import Confetti from '../Motion/Confetti';
 
 import FlipHead from './FlipHead';
 import FlipMain from './FlipMain';
@@ -14,6 +16,10 @@ export default function Flip({
   setAmount,
   staked,
   statusWon,
+  resetGame,
+  refetch,
+  statusFlip,
+  setStatusFlip,
 }: any) {
   const [result, setResult] = useState({ total: 0, heads: 0, tails: 0 });
 
@@ -22,32 +28,13 @@ export default function Flip({
   const [isHeads, setIsHeads] = useState(true);
   const [isFlipping, setIsFlipping] = useState(false);
 
-  const handleFlip = () => {
-    if (isFlipping) return;
-
-    setIsFlipping(true);
-
-    const flipResult = Math.random();
-    setTimeout(() => {
-      const newResult = { ...result, total: result.total + 1 };
-      if (flipResult <= 0.5) {
-        setIsHeads(true);
-        newResult.heads++;
-        setStatus('HEAD');
-      } else {
-        setIsHeads(false);
-        newResult.tails++;
-        setStatus('TAIL');
-      }
-      setResult(newResult);
-    }, 3000);
-  };
-
   const percentageHeads = (result.heads / result.total) * 100 || 0;
   const percentageTails = (result.tails / result.total) * 100 || 0;
 
   return (
     <Box>
+      {/* <ConfettiExplosion duration={3000} particleCount={200} /> */}
+
       <Flex flexDirection={'column'}>
         <FlipHead
           percentageHeads={percentageHeads}
@@ -55,20 +42,26 @@ export default function Flip({
           percentageTails={percentageTails}
           coin={coin}
           setCoin={setCoin}
+          statusFlip={statusFlip}
+          statusWon={statusWon}
         />
 
         <FlipMain
           isHeads={isHeads}
           styles={styles}
           isFlipping={isFlipping}
-          handleFlip={handleFlip}
           setIsFlipping={setIsFlipping}
           status={status}
           handleGame={handleGame}
           setStaked={setStaked}
           setAmount={setAmount}
           staked={staked}
+          coin={coin}
           statusWon={statusWon}
+          resetGame={resetGame}
+          refetch={refetch}
+          statusFlip={statusFlip}
+          setStatusFlip={setStatusFlip}
         />
       </Flex>
     </Box>

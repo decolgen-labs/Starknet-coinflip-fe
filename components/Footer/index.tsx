@@ -31,6 +31,9 @@ const Footer = () => {
           <Text
             fontSize="sm"
             fontWeight="bold"
+            _hover={{
+              color: 'gray.600',
+            }}
             color="white"
             px={2}
             borderRight={

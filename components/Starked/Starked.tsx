@@ -1,4 +1,3 @@
-import { useDisclosure } from '@chakra-ui/react';
 import {
   useAccount,
   useBalance,
@@ -15,14 +14,14 @@ import abiToken from '../../abi/tokenEth.json';
 import config from '../../config/config';
 import { getEvent } from '../Contract/contract';
 import Flip from '../Flip/Flip';
-import { useAuth } from '../hooks/useAuth';
-import Loading from '../Loading/Loading';
 
 import { setUserLoading } from '@/redux/user/user-slice';
 export default function Starked() {
   const [staked, setStaked] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0.002);
   const [statusWon, setStatusWon] = useState<any>();
+  const [statusFlip, setStatusFlip] = useState<boolean>(false);
+
   const { account, address, status } = useAccount();
   const dispatch = useDispatch();
   const { isLoading, isError, error, data, refetch } = useBalance({
@@ -30,12 +29,6 @@ export default function Starked() {
     watch: true,
   });
   const [coin, setCoin] = useState(0);
-
-  const {
-    isOpen: isOpenLoading,
-    onOpen: onOpenLoading,
-    onClose: onCloseLoading,
-  } = useDisclosure();
 
   const { chain } = useNetwork();
   const { contract } = useContract({
@@ -74,6 +67,7 @@ export default function Starked() {
     watch: true,
   });
 
+  console.log(coin);
   const {
     writeAsync,
     data: dataWrite,
@@ -122,7 +116,6 @@ export default function Starked() {
       }
 
       if (isWon !== undefined) {
-        refetch();
         setStatusWon(isWon);
       } else {
         console.error('No valid data found on the blockchain');
@@ -132,20 +125,22 @@ export default function Starked() {
   };
   const handleGame = async () => {
     try {
-      onOpenLoading();
       if (Number(isApprove) >= amount * 1e18) {
         const createGame = await writeAsync();
         await handleSettle(createGame?.transaction_hash);
-        onCloseLoading();
       } else {
-        onOpenLoading();
         await writeApprove();
-        onCloseLoading();
       }
     } catch (error) {
       console.error('Error in handleGame:', error);
-      onCloseLoading();
     }
+  };
+
+  const resetGame = () => {
+    setCoin(0);
+    setStatusWon(undefined);
+    refetch();
+    setStatusFlip(false);
   };
 
   return (
@@ -158,9 +153,11 @@ export default function Starked() {
         setAmount={setAmount}
         staked={staked}
         statusWon={statusWon}
+        resetGame={resetGame}
+        refetch={refetch}
+        statusFlip={statusFlip}
+        setStatusFlip={setStatusFlip}
       />
-
-      <Loading isOpen={isOpenLoading} onClose={onCloseLoading} />
     </>
   );
 }

@@ -1,16 +1,8 @@
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import {
-  Button,
-  HStack,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Text,
-} from '@chakra-ui/react';
+import { Button, HStack, Menu, MenuButton, Text } from '@chakra-ui/react';
 import { useBalance, useDisconnect } from '@starknet-react/core';
 import React from 'react';
 import { FaUserCircle } from 'react-icons/fa';
+import { MdLogout } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 
 import { useAuth } from '../hooks/useAuth';
@@ -27,7 +19,7 @@ export default function Profile() {
   const { disconnect } = useDisconnect();
   const dispatch = useDispatch();
   return (
-    <Menu>
+    <Menu direction="ltr">
       <MenuButton
         textColor={'black'}
         as={Button}
@@ -35,7 +27,15 @@ export default function Profile() {
         rounded={'2xl'}
         color={'white'}
         variant={'hover'}
-        rightIcon={<ChevronDownIcon />}
+        rightIcon={<MdLogout />}
+        onClick={async () => {
+          await dispatch(setUserLoading(true));
+          removeUserFromStorage();
+          await dispatch(setUser(undefined));
+          await disconnect();
+          dispatch(setUserLoading(false));
+        }}
+        fontSize={'sm'}
       >
         <HStack>
           <FaUserCircle />
@@ -49,23 +49,10 @@ export default function Profile() {
               </>
             )}
           </Text>
-          {/* <Text>{user && user.slice(0, 4) + '...' + user.slice(-4)}</Text> */}
         </HStack>
       </MenuButton>
-      {/* <HStack mt={2}>
-        <Text color={'white'} fontWeight="bold">
-          {isLoading ? (
-            <Text>Loading...</Text>
-          ) : (
-            <>
-              {(parseFloat(data?.value as any) / 1e18).toFixed(6)}
-              {data?.symbol}
-            </>
-          )}
-        </Text>
-      </HStack> */}
 
-      <MenuList p={0} width="full">
+      {/* <MenuList p={0} width="full">
         <MenuItem
           onClick={async () => {
             await dispatch(setUserLoading(true));
@@ -78,7 +65,7 @@ export default function Profile() {
         >
           <Text>Log out</Text>
         </MenuItem>
-      </MenuList>
+      </MenuList> */}
     </Menu>
   );
 }
