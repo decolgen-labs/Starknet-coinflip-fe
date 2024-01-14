@@ -9,20 +9,27 @@ const SociaLink = () => {
     {
       icon: DiscordIcon,
       link: 'https://discord.com/invite/djU2mEJcSq',
+      ariaLabel: 'Starknet Coinflip Link Discord"',
     },
     {
       icon: TwitterIcon,
       link: 'https://twitter.com/FaceToSee_',
+      ariaLabel: 'Starknet Coinflip Link Twitter"',
     },
   ];
   return (
     <>
       <HStack py={3} px={3} bg="primary.green.200" borderRadius="lg">
         {ListSocial.map(item => (
-          <Link href={item.link} key={item.link} target="_blank">
+          <Link
+            href={item.link}
+            key={item.link}
+            target="_blank"
+            aria-label={item.ariaLabel}
+          >
             <IconButton
               icon={<Icon as={item.icon} height={6} w={6} />}
-              aria-label="Decolgen Flipcoins"
+              aria-label="Starknet Coinflip"
               variant="unstyled"
               cursor="pointer"
               color="white"

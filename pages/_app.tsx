@@ -5,7 +5,6 @@ import {
   StarknetConfig,
   publicProvider,
   argent,
-  braavos,
   useInjectedConnectors,
   voyager,
 } from '@starknet-react/core';
@@ -16,6 +15,7 @@ import { NextSeo } from 'next-seo';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import GoogleAnalytics from '@/components/SEO/GoogleAnalytcs';
 import DefaultLayout from '@/layout/Layout/DefaultLayout';
 import { persistor, store } from '@/redux/store';
 import theme from '@/styles/theme';
@@ -33,6 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
+        <meta charSet="UTF-8" />
         <link rel="icon" href="https://coinflip.decolgenlabs.com/favicon.ico" />
         <meta
           property="twitter:image"
@@ -42,12 +43,14 @@ export default function App({ Component, pageProps }: AppProps) {
           property="twitter:description"
           content="Face To See CoinFlip is the first betting game within the Starknet Arcade Hub, enabling Starknet degens to immerse in our betting ecosystem. Have fun - Play - Win and multiply your holdings on Starknet!"
         />
+        <meta name="keywords" content="Coinflip, Starknet, Decolgenlabs" />
+        <meta name="author" content="Decolgen Labs" />
       </Head>
       <NextSeo
-        title="Coinflip Starknet"
+        title="Starknet Coinflip "
         description="Face To See CoinFlip is the first betting game within the Starknet Arcade Hub, enabling Starknet degens to immerse in our betting ecosystem. Have fun - Play - Win and multiply your holdings on Starknet!"
         openGraph={{
-          title: 'Coinflip Starknet',
+          title: ' Starknet Coinflip',
           description:
             'Face To See CoinFlip is the first betting game within the Starknet Arcade Hub, enabling Starknet degens to immerse in our betting ecosystem. Have fun - Play - Win and multiply your holdings on Starknet!',
           url: 'https://coinflip.decolgenlabs.com/',
@@ -79,6 +82,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </Provider>
         </StarknetConfig>
       </main>
+      <GoogleAnalytics />
     </>
   );
 }
