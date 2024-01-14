@@ -78,7 +78,7 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
         <Center
           position="absolute"
           w="full"
-          bottom={{ md: 10, base: 3 }}
+          bottom={{ lg: 14, md: 10, base: 3 }}
           zIndex={10}
         >
           <Footer />

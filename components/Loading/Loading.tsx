@@ -1,6 +1,5 @@
 import {
   Flex,
-  Heading,
   Modal,
   ModalBody,
   ModalContent,

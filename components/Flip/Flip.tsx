@@ -1,9 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { useState } from 'react';
-import ConfettiExplosion from 'react-confetti-explosion';
 
 import styles from '../../styles/CoinFlip.module.css';
-import Confetti from '../Motion/Confetti';
 
 import FlipHead from './FlipHead';
 import FlipMain from './FlipMain';

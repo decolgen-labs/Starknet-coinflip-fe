@@ -1,6 +1,5 @@
 'use client';
-import { Box, Center, Icon, useBreakpointValue } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Box, Center, Icon } from '@chakra-ui/react';
 
 import ConnectWallet from '../Button/ConnectWallet';
 import Profile from '../Profile/Profile';
@@ -14,32 +13,30 @@ const StartGame = () => {
   const { user } = useAuth();
   // const [isExploding, setIsExploding] = useState(false);
 
-  const md = useBreakpointValue({ base: false, md: true });
   return (
     <>
       <Box position="relative" height="full" zIndex={10}>
-        {md && (
-          <Icon
-            as={BgStart}
-            height="100%"
-            width="40%"
-            position="absolute"
-            top={0}
-            left={4}
-            right={0}
-          />
-        )}
+        <Icon
+          as={BgStart}
+          height="100%"
+          width="40%"
+          position="absolute"
+          top={0}
+          left={4}
+          right={0}
+          display={{ md: 'block', base: 'none' }}
+        />
 
-        {md && (
-          <Icon
-            as={BgRight}
-            height="100%"
-            width="40%"
-            position="absolute"
-            top={0}
-            right={4}
-          />
-        )}
+        <Icon
+          as={BgRight}
+          height="100%"
+          width="40%"
+          position="absolute"
+          top={0}
+          right={4}
+          display={{ md: 'block', base: 'none' }}
+        />
+
         <Center
           alignItems="center"
           height="full"

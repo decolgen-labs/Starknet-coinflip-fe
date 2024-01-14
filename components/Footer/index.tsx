@@ -15,7 +15,7 @@ const Footer = () => {
     },
     {
       key: 'how-to-play',
-      label: 'How to Plat',
+      label: 'How to Play',
       link: '#',
     },
     {
