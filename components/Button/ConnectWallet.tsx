@@ -7,7 +7,7 @@ import IconWallet from '../../public/assets/icons/agent.svg';
 import ModalConnectWallet from '../Modal/ModalConnectWallet';
 
 const ConnectWallet = () => {
-  const { connect, connectors, status: isLogin } = useConnect();
+  const { connect, connectors } = useConnect();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 

@@ -1,9 +1,6 @@
 import { Box } from '@chakra-ui/react';
-import { useDisconnect } from '@starknet-react/core';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
-import Flip from '../Flip/Flip';
 import Profile from '../Profile/Profile';
 import Starked from '../Starked/Starked';
 

@@ -1,5 +1,4 @@
 import { useAccount, useConnect } from '@starknet-react/core';
-import Head from 'next/head';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -29,10 +28,6 @@ export default function Home() {
   }, [isLoading]);
   return (
     <>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>FlipCoin</title>
-      </Head>
       <StartGame />
     </>
   );

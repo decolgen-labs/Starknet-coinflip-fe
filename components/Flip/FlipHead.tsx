@@ -1,12 +1,4 @@
-import {
-  Box,
-  Checkbox,
-  Flex,
-  Icon,
-  Radio,
-  RadioGroup,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Flex, Icon, Radio, RadioGroup, Text } from '@chakra-ui/react';
 import React from 'react';
 
 import IconLignt from '../../public/assets/icons/light.svg';

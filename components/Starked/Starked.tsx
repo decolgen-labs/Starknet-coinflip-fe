@@ -22,9 +22,9 @@ export default function Starked() {
   const [statusWon, setStatusWon] = useState<any>();
   const [statusFlip, setStatusFlip] = useState<boolean>(false);
 
-  const { account, address, status } = useAccount();
+  const { address } = useAccount();
   const dispatch = useDispatch();
-  const { isLoading, isError, error, data, refetch } = useBalance({
+  const { refetch } = useBalance({
     address,
     watch: true,
   });
