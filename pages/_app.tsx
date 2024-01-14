@@ -15,7 +15,7 @@ import { NextSeo } from 'next-seo';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import GoogleAnalytics from '@/components/SEO/GoogleAnalytcs';
+import GoogleAnalytics from '@/components/SEO/GoogleAnalytics';
 import DefaultLayout from '@/layout/Layout/DefaultLayout';
 import { persistor, store } from '@/redux/store';
 import theme from '@/styles/theme';
@@ -60,7 +60,7 @@ export default function App({ Component, pageProps }: AppProps) {
         }}
         twitter={{
           handle: '@handle',
-          site: '@site',
+          site: '@Starknet Conflip',
           cardType: 'summary_large_image',
         }}
       />
