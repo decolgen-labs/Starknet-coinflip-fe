@@ -1,7 +1,6 @@
-import { Box, Button, Flex, Icon, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Icon, Text } from '@chakra-ui/react';
 import { useAccount, useBalance } from '@starknet-react/core';
 import React, { useEffect, useRef, useState } from 'react';
-import ConfettiExplosion from 'react-confetti-explosion';
 
 import IconETH from '../../public/assets/icons/eth.svg';
 import { useAuth } from '../hooks/useAuth';
