@@ -1,4 +1,11 @@
-import { Button, HStack, Menu, MenuButton, Text } from '@chakra-ui/react';
+import {
+  Button,
+  HStack,
+  Menu,
+  MenuButton,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
 import { useBalance, useDisconnect } from '@starknet-react/core';
 import React from 'react';
 import { FaUserCircle } from 'react-icons/fa';
@@ -41,7 +48,9 @@ export default function Profile() {
           <FaUserCircle />
           <Text color={'white'} fontWeight="bold">
             {isLoading ? (
-              <Text>Loading...</Text>
+              <Text>
+                <Spinner mt={0.5} size={'xs'} />
+              </Text>
             ) : (
               <>
                 {(parseFloat(data?.value as any) / 1e18).toFixed(6) + ' '}

@@ -6,6 +6,7 @@ import { IInitialState } from './user-interface';
 const initialState: IInitialState = {
   user: getItemFromLocal('user'),
   isLoading: false,
+  chainId: getItemFromLocal('chainId'),
 };
 
 export const userSlice = createSlice({
@@ -18,6 +19,10 @@ export const userSlice = createSlice({
     setUserLoading: (state, action) => {
       state.isLoading = action.payload;
     },
+
+    setChainId: (state, action) => {
+      state.chainId = action.payload;
+    },
   },
 });
-export const { setUser, setUserLoading } = userSlice.actions;
+export const { setUser, setUserLoading, setChainId  } = userSlice.actions;
