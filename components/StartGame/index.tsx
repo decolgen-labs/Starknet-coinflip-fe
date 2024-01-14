@@ -22,6 +22,7 @@ const StartGame = () => {
           width="40%"
           position="absolute"
           top={0}
+          aria-label="Starknet Coinflip Decolgenlabs"
           left={4}
           right={0}
           display={{ md: 'block', base: 'none' }}
@@ -31,6 +32,7 @@ const StartGame = () => {
           as={BgRight}
           height="100%"
           width="40%"
+          aria-label="Starknet Coinflip Decolgenlabs  "
           position="absolute"
           top={0}
           right={4}
@@ -63,7 +65,13 @@ const StartGame = () => {
                 flexDirection={'column'}
                 alignItems={'center'}
               >
-                <Icon as={LogoIcon} width={'120px'} height="auto" mb={10} />
+                <Icon
+                  as={LogoIcon}
+                  width={'120px'}
+                  height="auto"
+                  mb={10}
+                  aria-label="Starknet Coinflip Decolgenlabs Logo"
+                />
                 <ConnectWallet />
               </Box>
               <Box w={'100%'} h={'100%'}>

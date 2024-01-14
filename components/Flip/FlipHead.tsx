@@ -67,7 +67,13 @@ export default function FlipHead({
           </Box>
 
           <Box>
-            <Icon color={borderColorStt} as={IconLignt} w={12} h={12} />
+            <Icon
+              color={borderColorStt}
+              as={IconLignt}
+              w={12}
+              h={12}
+              aria-label="Starknet Coinflip Decolgenlabs Border"
+            />
           </Box>
           <Box
             w={{ lg: '9.5rem', base: 'fit-content' }}
