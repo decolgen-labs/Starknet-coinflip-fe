@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://coinflip.decolgenlabs.com/
+
+# Sitemaps
+Sitemap: https://coinflip.decolgenlabs.com/sitemap.xml
