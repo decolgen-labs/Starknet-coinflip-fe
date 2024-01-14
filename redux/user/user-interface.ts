@@ -6,4 +6,5 @@ export interface IUser {
 export interface IInitialState {
   user: string | null;
   isLoading: boolean;
+  chainId: string | null;
 }

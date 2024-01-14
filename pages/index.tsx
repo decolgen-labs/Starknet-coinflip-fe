@@ -5,12 +5,13 @@ import { useDispatch } from 'react-redux';
 import { useAuth } from '@/components/hooks/useAuth';
 import StartGame from '@/components/StartGame';
 import { saveUserToStorage } from '@/redux/user/user-helper';
-import { setUser } from '@/redux/user/user-slice';
+import { setChainId, setUser } from '@/redux/user/user-slice';
+import { useSelector } from 'react-redux';
 
 export default function Home() {
   const { user, isLoading } = useAuth();
-  const { address, status } = useAccount();
-  const { connect, connectors } = useConnect();
+  const { address, status, chainId } = useAccount();
+  const { connect, connectors, data } = useConnect();
 
   const dispatch = useDispatch();
 
@@ -20,12 +21,21 @@ export default function Home() {
       saveUserToStorage(address);
     }
   }, [address]);
+
+  const reduxChainId = useSelector((state: any) => state.user.chainId);
+
+  useEffect(() => {
+    const storedChainId = localStorage.getItem('chainId');
+    if (storedChainId) {
+      dispatch(setChainId(storedChainId));
+    }
+  }, []);
+
   useEffect(() => {
     if (user && status === 'disconnected') {
-      /*  console.log('Dectect dis'); */
-      connect({ connector: connectors[0] });
+      connect({ connector: connectors[reduxChainId] });
     }
-  }, [isLoading]);
+  }, [isLoading, address, reduxChainId]);
   return (
     <>
       <StartGame />

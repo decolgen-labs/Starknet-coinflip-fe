@@ -1,15 +1,41 @@
 import { Icon } from '@chakra-ui/icons';
-import { Button, Flex, useDisclosure, Text, Box } from '@chakra-ui/react';
-import { useConnect } from '@starknet-react/core';
-import React from 'react';
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { useAccount, useConnect } from '@starknet-react/core';
 
 import IconWallet from '../../public/assets/icons/agent.svg';
-import ModalConnectWallet from '../Modal/ModalConnectWallet';
+import IconBraavosWallet from '../../public/assets/icons/braavos.svg';
 
-const ConnectWallet = () => {
-  const { connect, connectors } = useConnect();
+import ModalConnectWallet from '../Modal/ModalConnectWallet';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../hooks/useAuth';
+import { useDispatch } from 'react-redux';
+import { setChainId } from '@/redux/user/user-slice';
+import { saveChainIdToStorage } from '@/redux/user/user-helper';
+import wallets from '@/config/wallet';
+import ConnectWalletButton from './ConnectWalletButton';
+
+const ConnectWallet = ({ onClick, icon, label }: any) => {
+  const { connect, connectors, data } = useConnect();
+  const { address, status, chainId } = useAccount();
+  const { user, isLoading } = useAuth();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [idxWallet, setIdxWallet] = useState(0);
+
+  const connectWallet = async (connectorIndex: number) => {
+    await connect({ connector: connectors[connectorIndex] });
+
+    setIdxWallet(connectorIndex);
+    onClose();
+  };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (address && address != user) {
+      dispatch(setChainId(address));
+      saveChainIdToStorage(idxWallet);
+    }
+  }, [address]);
 
   return (
     <>
@@ -26,27 +52,14 @@ const ConnectWallet = () => {
 
         <ModalConnectWallet isOpen={isOpen} onClose={onClose}>
           <Box px={2} pb={4}>
-            <Flex
-              py={3}
-              key={`connect2-Agent X`}
-              alignItems={'center'}
-              rounded={'lg'}
-              gap={{ md: 4, base: 3 }}
-              cursor={'pointer'}
-              _hover={{
-                bg: 'primary.green.300',
-              }}
-              onClick={async () => {
-                await connect({ connector: connectors[0] });
-                onClose();
-              }}
-              px={8}
-            >
-              <Icon as={IconWallet} fontSize={'2xl'} />
-              <Text fontSize={'lg'} textColor="white">
-                Argent Wallet
-              </Text>
-            </Flex>
+            {wallets.map(wallet => (
+              <ConnectWalletButton
+                key={`connect-${wallet.label}`}
+                onClick={() => connectWallet(wallet.index)}
+                icon={wallet.icon}
+                label={wallet.label}
+              />
+            ))}
           </Box>
         </ModalConnectWallet>
       </Box>
