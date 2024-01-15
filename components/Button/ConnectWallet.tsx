@@ -13,30 +13,22 @@ import ConnectWalletButton from './ConnectWalletButton';
 
 import wallets from '@/config/wallet';
 import { saveChainIdToStorage } from '@/redux/user/user-helper';
-import { setChainId } from '@/redux/user/user-slice';
+import { setChainId, setUser } from '@/redux/user/user-slice';
 
 const ConnectWallet = ({ onClick, icon, label }: any) => {
   const { connect, connectors, data } = useConnect();
-  const { address, status, chainId } = useAccount();
-  const { user, isLoading } = useAuth();
+  const { address, status } = useAccount();
+  const { user, isLoading, chainId } = useAuth();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [idxWallet, setIdxWallet] = useState(0);
 
+  const dispatch = useDispatch();
   const connectWallet = async (connectorIndex: number) => {
     await connect({ connector: connectors[connectorIndex] });
 
-    setIdxWallet(connectorIndex);
+    await dispatch(setChainId(connectorIndex));
     onClose();
   };
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (address && address != user) {
-      dispatch(setChainId(address));
-      saveChainIdToStorage(idxWallet);
-    }
-  }, [address]);
 
   return (
     <>
@@ -56,7 +48,9 @@ const ConnectWallet = ({ onClick, icon, label }: any) => {
             {wallets.map(wallet => (
               <ConnectWalletButton
                 key={`connect-${wallet.label}`}
-                onClick={() => connectWallet(wallet.index)}
+                onClick={async () => {
+                  await connectWallet(wallet.index);
+                }}
                 icon={wallet.icon}
                 label={wallet.label}
               />

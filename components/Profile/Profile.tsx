@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { useAuth } from '../hooks/useAuth';
 
 import { removeUserFromStorage } from '@/redux/user/user-helper';
-import { setUser, setUserLoading } from '@/redux/user/user-slice';
+import { setChainId, setUser, setUserLoading } from '@/redux/user/user-slice';
 
 export default function Profile() {
   const { user } = useAuth();
@@ -38,7 +38,8 @@ export default function Profile() {
         onClick={async () => {
           await dispatch(setUserLoading(true));
           removeUserFromStorage();
-          await dispatch(setUser(undefined));
+          await dispatch(setUser(null));
+          await dispatch(setChainId(null));
           await disconnect();
           dispatch(setUserLoading(false));
         }}

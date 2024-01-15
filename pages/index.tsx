@@ -5,16 +5,20 @@ import { useSelector } from 'react-redux';
 
 import { useAuth } from '@/components/hooks/useAuth';
 import StartGame from '@/components/StartGame';
-import { saveUserToStorage } from '@/redux/user/user-helper';
+import {
+  getItemFromLocal,
+  getUserFromStorage,
+  saveUserToStorage,
+} from '@/redux/user/user-helper';
 import { setChainId, setUser } from '@/redux/user/user-slice';
 
 export default function Home() {
-  const { user, isLoading } = useAuth();
-  const { address, status, chainId } = useAccount();
+  const { user, isLoading, chainId } = useAuth();
+  const { address, status } = useAccount();
   const { connect, connectors, data } = useConnect();
 
   const dispatch = useDispatch();
-
+  console.log('Data cone', data);
   useEffect(() => {
     if (address && address != user) {
       dispatch(setUser(address));
@@ -22,20 +26,22 @@ export default function Home() {
     }
   }, [address]);
 
-  const reduxChainId = useSelector((state: any) => state.user.chainId);
+  /*   const reduxChainId = useSelector((state: any) => state.user.chainId); */
 
   useEffect(() => {
-    const storedChainId = localStorage.getItem('chainId');
-    if (storedChainId) {
-      dispatch(setChainId(storedChainId));
+    if (chainId != null) {
+      dispatch(setChainId(chainId));
     }
   }, []);
 
   useEffect(() => {
-    if (user && status === 'disconnected') {
-      connect({ connector: connectors[reduxChainId] });
-    }
-  }, [isLoading, address, reduxChainId]);
+    const handleReConenct = async () => {
+      if (user && status === 'disconnected' && chainId != null) {
+        await connect({ connector: connectors[chainId] });
+      }
+    };
+    handleReConenct();
+  }, [isLoading, address, chainId]);
   return (
     <>
       <StartGame />

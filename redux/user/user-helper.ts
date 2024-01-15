@@ -1,7 +1,9 @@
 export const getUserFromStorage = () => {
-  return JSON.parse(localStorage.getItem('user') || '{}');
+  if (typeof window === 'undefined') {
+    return null;
+  }
+  return JSON.parse(localStorage.getItem('persist:root') || '{}');
 };
-
 
 // Save Data User
 export const saveUserToStorage = (data: any) => {

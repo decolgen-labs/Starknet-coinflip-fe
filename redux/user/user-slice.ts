@@ -4,9 +4,13 @@ import { getItemFromLocal } from './user-helper';
 import { IInitialState } from './user-interface';
 
 const initialState: IInitialState = {
-  user: getItemFromLocal('user'),
+  user: getItemFromLocal('persist:root')
+    ? getItemFromLocal('persist:root').user.user
+    : null,
   isLoading: false,
-  chainId: getItemFromLocal('chainId'),
+  chainId: getItemFromLocal('persist:root')
+    ? getItemFromLocal('persist:root').user.chainId
+    : null,
 };
 
 export const userSlice = createSlice({
@@ -25,4 +29,4 @@ export const userSlice = createSlice({
     },
   },
 });
-export const { setUser, setUserLoading, setChainId  } = userSlice.actions;
+export const { setUser, setUserLoading, setChainId } = userSlice.actions;
