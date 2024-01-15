@@ -1,12 +1,12 @@
 import { useAccount, useConnect } from '@starknet-react/core';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { useAuth } from '@/components/hooks/useAuth';
 import StartGame from '@/components/StartGame';
 import { saveUserToStorage } from '@/redux/user/user-helper';
 import { setChainId, setUser } from '@/redux/user/user-slice';
-import { useSelector } from 'react-redux';
 
 export default function Home() {
   const { user, isLoading } = useAuth();

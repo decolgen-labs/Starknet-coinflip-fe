@@ -1,18 +1,19 @@
 import { Icon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import { useAccount, useConnect } from '@starknet-react/core';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import IconWallet from '../../public/assets/icons/agent.svg';
 import IconBraavosWallet from '../../public/assets/icons/braavos.svg';
-
-import ModalConnectWallet from '../Modal/ModalConnectWallet';
-import { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { useDispatch } from 'react-redux';
-import { setChainId } from '@/redux/user/user-slice';
-import { saveChainIdToStorage } from '@/redux/user/user-helper';
-import wallets from '@/config/wallet';
+import ModalConnectWallet from '../Modal/ModalConnectWallet';
+
 import ConnectWalletButton from './ConnectWalletButton';
+
+import wallets from '@/config/wallet';
+import { saveChainIdToStorage } from '@/redux/user/user-helper';
+import { setChainId } from '@/redux/user/user-slice';
 
 const ConnectWallet = ({ onClick, icon, label }: any) => {
   const { connect, connectors, data } = useConnect();

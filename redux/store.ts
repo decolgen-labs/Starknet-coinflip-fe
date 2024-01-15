@@ -17,7 +17,7 @@ const persistConfig = {
   key: 'root',
   storage,
   version: 1,
-  whitelist: ['user','chainId'],
+  whitelist: ['user', 'chainId'],
 };
 
 const rootReducer = combineReducers({
@@ -25,6 +25,18 @@ const rootReducer = combineReducers({
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const expireTime = 24 * 60 * 60 * 1000;
+//  const currentTime = new Date().getTime();
+//   const persistedDataTimestamp = state.persistedDataTimestamp; // adjust based on your actual state structure
+
+//   if (persistedDataTimestamp && currentTime - persistedDataTimestamp > expireTime) {
+//     // Data has expired, take appropriate action (reset the data, fetch new data, etc.)
+//     state = {
+//       ...state,
+//       persistedData: null, // Reset or re-fetch data
+//       persistedDataTimestamp: null, // Reset timestamp
+//     };
+//   }
 
 export const store = configureStore({
   reducer: persistedReducer,

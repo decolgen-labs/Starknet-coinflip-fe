@@ -14,15 +14,13 @@ import type { AppProps } from 'next/app';
 import { Nunito_Sans } from 'next/font/google';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ArgentMobileConnector } from 'starknetkit/argentMobile';
+import { WebWalletConnector } from 'starknetkit/webwallet';
 
 import DefaultLayout from '@/layout/Layout/DefaultLayout';
 import { persistor, store } from '@/redux/store';
 import theme from '@/styles/theme';
 import '../styles/globals.css';
-import ConfettiExplosion from 'react-confetti-explosion';
-import Confetti from '@/components/Motion/Confetti';
-import { WebWalletConnector } from 'starknetkit/webwallet';
-import { ArgentMobileConnector } from 'starknetkit/argentMobile';
 
 const nutinoSans = Nunito_Sans({ subsets: ['latin'] });
 
