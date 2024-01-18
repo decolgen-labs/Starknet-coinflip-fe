@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import { useAuth } from '@/components/hooks/useAuth';
+import SEOHead from '@/components/SEO/SEOHead';
 import StartGame from '@/components/StartGame';
 import {
   getItemFromLocal,
@@ -44,6 +45,7 @@ export default function Home() {
   }, [isLoading, address, chainId]);
   return (
     <>
+      <SEOHead />
       <StartGame />
     </>
   );
