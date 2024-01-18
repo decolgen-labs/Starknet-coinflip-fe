@@ -17,6 +17,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ArgentMobileConnector } from 'starknetkit/argentMobile';
 import { WebWalletConnector } from 'starknetkit/webwallet';
 
+import GoogleAnalytics from '@/components/SEO/GoogleAnalytics';
 import DefaultLayout from '@/layout/Layout/DefaultLayout';
 import { persistor, store } from '@/redux/store';
 import theme from '@/styles/theme';
@@ -32,23 +33,26 @@ export default function App({ Component, pageProps }: AppProps) {
   ];
 
   return (
-    <main className={nutinoSans.className}>
-      <StarknetConfig
-        chains={[goerli, sepolia]}
-        provider={publicProvider()}
-        connectors={connectors}
-        explorer={voyager}
-      >
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <ChakraProvider theme={theme}>
-              <DefaultLayout>
-                <Component {...pageProps} />
-              </DefaultLayout>
-            </ChakraProvider>
-          </PersistGate>
-        </Provider>
-      </StarknetConfig>
-    </main>
+    <>
+      <main className={nutinoSans.className}>
+        <StarknetConfig
+          chains={[goerli, sepolia]}
+          provider={publicProvider()}
+          connectors={connectors}
+          explorer={voyager}
+        >
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <ChakraProvider theme={theme}>
+                <DefaultLayout>
+                  <Component {...pageProps} />
+                </DefaultLayout>
+              </ChakraProvider>
+            </PersistGate>
+          </Provider>
+        </StarknetConfig>
+        <GoogleAnalytics />
+      </main>
+    </>
   );
 }
