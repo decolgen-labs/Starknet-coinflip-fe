@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import ReacConfetti from 'react-confetti';
 const Confetti = () => {
   const [windowDimension, setDimension] = useState({
     with: window.innerWidth,
@@ -19,10 +18,10 @@ const Confetti = () => {
 
   return (
     <>
-      <ReacConfetti
+      {/* <ReacConfetti
         width={windowDimension.with}
         height={windowDimension.heigh}
-      />
+      /> */}
     </>
   );
 };

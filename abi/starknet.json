@@ -5,20 +5,6 @@
     "interface_name": "contracts::IStarkFlip"
   },
   {
-    "name": "core::integer::u256",
-    "type": "struct",
-    "members": [
-      {
-        "name": "low",
-        "type": "core::integer::u128"
-      },
-      {
-        "name": "high",
-        "type": "core::integer::u128"
-      }
-    ]
-  },
-  {
     "name": "core::bool",
     "type": "enum",
     "variants": [
@@ -33,101 +19,23 @@
     ]
   },
   {
+    "name": "core::integer::u256",
+    "type": "struct",
+    "members": [
+      {
+        "name": "low",
+        "type": "core::integer::u128"
+      },
+      {
+        "name": "high",
+        "type": "core::integer::u128"
+      }
+    ]
+  },
+  {
     "name": "contracts::IStarkFlip",
     "type": "interface",
     "items": [
-      {
-        "name": "get_admin",
-        "type": "function",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "name": "get_contract_name",
-        "type": "function",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::felt252"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "name": "get_liquidity",
-        "type": "function",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::integer::u256"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "name": "get_shared_liquidity",
-        "type": "function",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::integer::u256"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "name": "get_shares",
-        "type": "function",
-        "inputs": [
-          {
-            "name": "shareholder_address",
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "outputs": [
-          {
-            "type": "core::integer::u256"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "name": "get_pool_staked",
-        "type": "function",
-        "inputs": [
-          {
-            "name": "id",
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "outputs": [
-          {
-            "type": "core::integer::u256"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "name": "get_game_staked",
-        "type": "function",
-        "inputs": [
-          {
-            "name": "id",
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "outputs": [
-          {
-            "type": "core::integer::u256"
-          }
-        ],
-        "state_mutability": "view"
-      },
       {
         "name": "set_contract_name",
         "type": "function",
@@ -193,11 +101,23 @@
         "state_mutability": "external"
       },
       {
+        "name": "withdraw_treasury",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "amount",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
         "name": "create_pool",
         "type": "function",
         "inputs": [
           {
-            "name": "payer_address",
+            "name": "dealer",
             "type": "core::starknet::contract_address::ContractAddress"
           },
           {
@@ -230,6 +150,22 @@
           },
           {
             "name": "staked_amount",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "name": "withdraw_liquidity_pool",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "pool_id",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "amount",
             "type": "core::integer::u256"
           }
         ],
@@ -273,20 +209,24 @@
         "state_mutability": "external"
       },
       {
-        "name": "test_play",
+        "name": "cancel_game",
         "type": "function",
         "inputs": [
           {
-            "name": "signer",
+            "name": "game_id",
             "type": "core::starknet::contract_address::ContractAddress"
-          },
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "name": "test_get_message_hash",
+        "type": "function",
+        "inputs": [
           {
-            "name": "guess",
-            "type": "core::integer::u8"
-          },
-          {
-            "name": "seed",
-            "type": "core::integer::u128"
+            "name": "game_id",
+            "type": "core::starknet::contract_address::ContractAddress"
           },
           {
             "name": "signature",
@@ -295,7 +235,7 @@
         ],
         "outputs": [
           {
-            "type": "(core::felt252, core::felt252, core::felt252)"
+            "type": "core::felt252"
           }
         ],
         "state_mutability": "view"
@@ -356,6 +296,10 @@
     "type": "function",
     "inputs": [
       {
+        "name": "game_id",
+        "type": "core::felt252"
+      },
+      {
         "name": "guess",
         "type": "core::integer::u8"
       },
@@ -371,6 +315,173 @@
     "outputs": [
       {
         "type": "core::felt252"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "get_admin",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "get_contract_name",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "core::felt252"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "get_liquidity",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "core::integer::u256"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "get_treasury",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "core::integer::u256"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "get_shared_liquidity",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "core::integer::u256"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "get_shares",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "shareholder_address",
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "core::integer::u256"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "contracts::StarkFlip::Pool",
+    "type": "struct",
+    "members": [
+      {
+        "name": "id",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "dealer",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "min_stake_amount",
+        "type": "core::integer::u256"
+      },
+      {
+        "name": "max_stake_amount",
+        "type": "core::integer::u256"
+      },
+      {
+        "name": "staked_amount",
+        "type": "core::integer::u256"
+      },
+      {
+        "name": "fee_rate",
+        "type": "core::integer::u128"
+      }
+    ]
+  },
+  {
+    "name": "get_pool",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "contracts::StarkFlip::Pool"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "contracts::StarkFlip::Game",
+    "type": "struct",
+    "members": [
+      {
+        "name": "id",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "pool",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "player",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "staked",
+        "type": "core::integer::u256"
+      },
+      {
+        "name": "guess",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "seed",
+        "type": "core::integer::u128"
+      },
+      {
+        "name": "fee_rate",
+        "type": "core::integer::u128"
+      }
+    ]
+  },
+  {
+    "name": "get_game",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "contracts::StarkFlip::Game"
       }
     ],
     "state_mutability": "view"
@@ -490,7 +601,7 @@
       },
       {
         "kind": "data",
-        "name": "payer_address",
+        "name": "dealer",
         "type": "core::starknet::contract_address::ContractAddress"
       },
       {
