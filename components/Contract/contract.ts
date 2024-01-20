@@ -16,8 +16,6 @@ export const getEvent = async (transactionHash: string) => {
       'https://starknet-goerli.infura.io/v3/7d290a76648a4bac93e5f98aa0d463ce',
   });
 
-
-
   const contract = new Contract(abi, config.contractAddress, provider);
 
   const txReceipt = await provider.getTransactionReceipt(transactionHash);
@@ -26,7 +24,7 @@ export const getEvent = async (transactionHash: string) => {
 
   const idGame = '0x' + parsedEvent[0].CreateGame.id.toString(16);
 
-  console.log(idGame)
+  console.log(idGame);
   const ResultTransactionHash = await verifyMsg(
     provider,
     parsedEvent,
