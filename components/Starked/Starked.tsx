@@ -45,7 +45,7 @@ export default function Starked() {
     if (!address || !contract) return [];
     return contractToken?.populateTransaction['approve']!(
       config.contractAddress,
-      1 * 1e18
+      0.1 * 1e18
     );
   }, [address, contract, contractToken?.populateTransaction]);
 
@@ -67,7 +67,7 @@ export default function Starked() {
     watch: true,
   });
 
-  console.log(coin);
+  console.log(isApprove);
   const {
     writeAsync,
     data: dataWrite,
