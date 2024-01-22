@@ -2,6 +2,9 @@ import { Box, Flex, Icon, Radio, RadioGroup, Text } from '@chakra-ui/react';
 import React from 'react';
 
 import IconLignt from '../../public/assets/icons/light.svg';
+
+import HeadIcon from '@/public/assets/coin/head.svg';
+import TailIcon from '@/public/assets/coin/tail.svg';
 export default function FlipHead({
   percentageHeads,
   result,
@@ -35,7 +38,11 @@ export default function FlipHead({
             w={{ lg: '9.5rem', base: 'fit-content' }}
             border="1px"
             px={4}
+            display="flex"
+            flexDir="column"
+            alignItems="center"
             py={3}
+            gap={1}
             borderColor={borderColorStt}
             rounded={'8px'}
             textAlign={'center'}
@@ -49,11 +56,17 @@ export default function FlipHead({
             >
               {percentageHeads.toFixed(0)}%
             </Text> */}
-            <Text my={0} whiteSpace={'pre'} textColor={borderColorStt}>
+
+            <Text
+              my={0}
+              whiteSpace={'pre'}
+              textColor={borderColorStt}
+              fontWeight="900"
+            >
               {/* {result.heads} */}
               HEADS
             </Text>
-
+            <Icon as={HeadIcon} h={10} w={10} />
             <Radio
               isDisabled={statusFlip}
               mt={2}
@@ -79,6 +92,10 @@ export default function FlipHead({
             w={{ lg: '9.5rem', base: 'fit-content' }}
             border="1px"
             px={4}
+            display="flex"
+            flexDir="column"
+            alignItems="center"
+            gap={1}
             py={2}
             borderColor={borderColorStt}
             rounded={'8px'}
@@ -94,11 +111,16 @@ export default function FlipHead({
             >
               {/* {percentageTails.toFixed(0)}% */}
             </Text>
-            <Text textColor={borderColorStt} my={0} whiteSpace={'pre'}>
+            <Text
+              textColor={borderColorStt}
+              my={0}
+              whiteSpace={'pre'}
+              fontWeight="900"
+            >
               {/* {result.tails}  */}
               TAILS
             </Text>
-
+            <Icon as={TailIcon} h={10} w={10} />
             <Radio
               isDisabled={statusFlip}
               mt={2}
